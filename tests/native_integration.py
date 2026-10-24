@@ -21,6 +21,9 @@ _fixture_mutex=k.CreateMutexW(None,True,'Local\\Jump.ForegroundChecks.'+hashlib.
 if c.get_last_error()==183:
     raise RuntimeError('Another Jump foreground test is running. Run interactive checks serially.')
 u.SwitchToThisWindow.argtypes=[w.HWND,w.BOOL]
+# Holding the foreground mutex, so no other fixture is writing run folders.
+import output_retention
+output_retention.prune()
 
 u.SetProcessDpiAwarenessContext.argtypes = [w.HANDLE]
 u.SetProcessDpiAwarenessContext(c.c_void_p(-4 & ((1 << (c.sizeof(c.c_void_p)*8))-1)))

@@ -45,7 +45,7 @@ Blender 和 Houdini 的宿主插件现在都使用 `JUMP_SAVE_1`、`\\.\pipe\Jum
 
 结果索引：`tests/output/universal-save/report.json`、`tests/output/check-runs/foreground.json`、`tests/output/check-runs/hidden.json`、`tests/output/qt-save/report.json`、`tests/output/breadcrumb/report.json`。最终构建的汇总见 `tests/output/universal-save/verification-summary.json`。
 
-程序接口说明与示例：[通用保存目标 SDK](../integrations/universal/README.md)。
+程序接口说明与示例：[通用保存目标 SDK](../../integrations/universal/README.md)。
 
 ## GitHub 源码依据
 

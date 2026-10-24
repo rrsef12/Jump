@@ -18,6 +18,7 @@ def run():
     args=parser.parse_args();available=FOREGROUND if args.foreground else HIDDEN
     selected=args.only or available
     if any(name not in available for name in selected):parser.error('Check does not belong to this mode')
+    import output_retention;output_retention.prune()
     out=ROOT/'tests/output/check-runs';out.mkdir(parents=True,exist_ok=True)
     report={}
     for name in selected:

@@ -25,13 +25,7 @@ foreach ($file in @(Get-ChildItem -LiteralPath (Join-Path $root 'integrations') 
 $nativeDirectory = Join-Path $stage 'integrations\houdini\native\22.0.368'
 New-Item -ItemType Directory -Force -Path $nativeDirectory | Out-Null
 Copy-Item -LiteralPath $native -Destination $nativeDirectory
-# Only documentation and its images, never machine-specific evidence reports.
-foreach ($file in @(Get-ChildItem -LiteralPath (Join-Path $root 'docs') -Recurse -File)) {
-    if ($file.Extension -notin '.md','.png','.jpg','.svg') { continue }
-    $target = Join-Path $stage $file.FullName.Substring($root.Length + 1)
-    New-Item -ItemType Directory -Force -Path (Split-Path -Parent $target) | Out-Null
-    Copy-Item -LiteralPath $file.FullName -Destination $target
-}
+# User docs are whitelisted above (README + quick start); docs/dev stays internal.
 $manifest = @{
     version = $version
     configuration = 'Release'
