@@ -37,14 +37,17 @@ std::wstring processImage(HWND h) {
     CloseHandle(p);
     return lower(result);
 }
-std::wstring processName(HWND h) { return std::filesystem::path(processImage(h)).filename().wstring(); }
+std::wstring processName(HWND h) {
+    return std::filesystem::path(processImage(h)).filename().wstring();
+}
 bool sameTarget(const Job &job) {
     DWORD pid = 0;
     if (!IsWindow(job.hwnd) || !IsWindowVisible(job.hwnd) || !IsWindowEnabled(job.hwnd))
         return false;
     GetWindowThreadProcessId(job.hwnd, &pid);
     return pid == job.pid && (!g->testTargetPid || pid == g->testTargetPid) &&
-        (g->testTargetImage.empty() || processImage(job.hwnd) == g->testTargetImage) && g->generation.load() == job.generation;
+           (g->testTargetImage.empty() || processImage(job.hwnd) == g->testTargetImage) &&
+           g->generation.load() == job.generation;
 }
 bool focusAllowsAction(const Job &job) {
     HWND foreground = GetForegroundWindow();
@@ -69,25 +72,31 @@ std::wstring extractPath(const std::wstring &text) {
 }
 std::wstring directoryFromShellAddress(const std::wstring &text) {
     auto path = extractPath(text);
-    if (!path.empty()) return path;
+    if (!path.empty())
+        return path;
     auto address = trim(text);
     auto colon = address.find(L':');
-    if (colon != address.npos) address = trim(address.substr(colon + 1));
-    if (address.empty()) return {};
+    if (colon != address.npos)
+        address = trim(address.substr(colon + 1));
+    if (address.empty())
+        return {};
 
     // Breadcrumbs use localized shell names (e.g. Downloads) instead of drive paths.
     // Resolve the actual known folder, including OneDrive/redirection, without editing the address bar.
-    struct Folder { const KNOWNFOLDERID *id; const wchar_t *canonical; };
+    struct Folder {
+        const KNOWNFOLDERID *id;
+        const wchar_t *canonical;
+    };
     const Folder folders[] = {
         {&FOLDERID_Downloads, L"Downloads"}, {&FOLDERID_Desktop, L"Desktop"},
         {&FOLDERID_Documents, L"Documents"}, {&FOLDERID_Pictures, L"Pictures"},
-        {&FOLDERID_Music, L"Music"}, {&FOLDERID_Videos, L"Videos"},
-        {&FOLDERID_Profile, L"User"}, {&FOLDERID_SkyDrive, L"OneDrive"},
-        {&FOLDERID_Public, L"Public"}, {&FOLDERID_PublicDocuments, L"Public Documents"}
-    };
+        {&FOLDERID_Music, L"Music"},         {&FOLDERID_Videos, L"Videos"},
+        {&FOLDERID_Profile, L"User"},        {&FOLDERID_SkyDrive, L"OneDrive"},
+        {&FOLDERID_Public, L"Public"},       {&FOLDERID_PublicDocuments, L"Public Documents"}};
     for (const auto &folder : folders) {
         PWSTR value = nullptr;
-        if (FAILED(SHGetKnownFolderPath(*folder.id, KF_FLAG_DONT_VERIFY, nullptr, &value))) continue;
+        if (FAILED(SHGetKnownFolderPath(*folder.id, KF_FLAG_DONT_VERIFY, nullptr, &value)))
+            continue;
         std::filesystem::path physical(value);
         CoTaskMemFree(value);
         std::vector<std::wstring> names{folder.canonical, physical.filename().wstring()};
@@ -102,14 +111,19 @@ std::wstring directoryFromShellAddress(const std::wstring &text) {
             CoTaskMemFree(pidl);
         }
         for (const auto &name : names) {
-            if (name.empty()) continue;
+            if (name.empty())
+                continue;
             auto prefix = lower(name), current = lower(address);
-            if (current != prefix && !(current.starts_with(prefix + L"\\") || current.starts_with(prefix + L"/"))) continue;
+            if (current != prefix &&
+                !(current.starts_with(prefix + L"\\") || current.starts_with(prefix + L"/")))
+                continue;
             auto resolved = physical;
-            if (address.size() > name.size()) resolved /= address.substr(name.size() + 1);
+            if (address.size() > name.size())
+                resolved /= address.substr(name.size() + 1);
             auto candidate = resolved.lexically_normal().wstring();
             DWORD attrs = GetFileAttributesW(candidate.c_str());
-            if (attrs != INVALID_FILE_ATTRIBUTES && (attrs & FILE_ATTRIBUTE_DIRECTORY)) return candidate;
+            if (attrs != INVALID_FILE_ATTRIBUTES && (attrs & FILE_ATTRIBUTE_DIRECTORY))
+                return candidate;
         }
     }
     return {};
@@ -137,39 +151,47 @@ bool selfTestShellAddresses() {
     for (auto id : {&FOLDERID_Downloads, &FOLDERID_Desktop, &FOLDERID_Documents}) {
         PWSTR path = nullptr, display = nullptr;
         PIDLIST_ABSOLUTE pidl = nullptr;
-        if (FAILED(SHGetKnownFolderPath(*id, 0, nullptr, &path))) return false;
+        if (FAILED(SHGetKnownFolderPath(*id, 0, nullptr, &path)))
+            return false;
         std::wstring expected(path);
         CoTaskMemFree(path);
-        if (FAILED(SHGetKnownFolderIDList(*id, 0, nullptr, &pidl))) return false;
+        if (FAILED(SHGetKnownFolderIDList(*id, 0, nullptr, &pidl)))
+            return false;
         ComPtr<IShellItem> item;
         auto hr = SHCreateItemFromIDList(pidl, IID_PPV_ARGS(&item));
         CoTaskMemFree(pidl);
-        if (FAILED(hr) || FAILED(item->GetDisplayName(SIGDN_NORMALDISPLAY, &display))) return false;
+        if (FAILED(hr) || FAILED(item->GetDisplayName(SIGDN_NORMALDISPLAY, &display)))
+            return false;
         std::wstring address(display);
         CoTaskMemFree(display);
         if (normalize(directoryFromShellAddress(L"地址: " + address)) != normalize(expected) ||
             normalize(directoryFromShellAddress(L"Address: " + address)) != normalize(expected) ||
-            normalize(directoryFromShellAddress(L"地址: " + expected)) != normalize(expected)) return false;
+            normalize(directoryFromShellAddress(L"地址: " + expected)) != normalize(expected))
+            return false;
     }
     return directoryFromShellAddress(L"地址: Jump不存在的系统位置_987654321").empty();
 }
 bool blenderBrowserWindow(HWND hwnd) {
     auto cls = windowClass(hwnd);
-    if (!cls.starts_with(L"GHOST_WindowClass")) return false;
+    if (!cls.starts_with(L"GHOST_WindowClass"))
+        return false;
     auto title = windowText(hwnd);
     return (title == L"Blender File View" || title == L"Blender文件视图" || title == L"Blender 文件视图") &&
            processName(hwnd) == L"blender.exe";
 }
 bool houdiniBrowserWindow(HWND hwnd) {
-    if (!windowClass(hwnd).starts_with(L"Qt")) return false;
+    if (!windowClass(hwnd).starts_with(L"Qt"))
+        return false;
     auto title = windowText(hwnd);
-    if (title != L"Save As" && title != L"另存为") return false;
+    if (title != L"Save As" && title != L"另存为")
+        return false;
     auto process = processName(hwnd);
     return process == L"houdinifx.exe" || process == L"houdini.exe" || process == L"houdinicore.exe";
 }
 bool classicFileDialog(HWND hwnd) {
     if (hwnd && IsWindowVisible(hwnd) && IsWindowEnabled(hwnd) &&
-        (blenderBrowserWindow(hwnd) || houdiniBrowserWindow(hwnd))) return true;
+        (blenderBrowserWindow(hwnd) || houdiniBrowserWindow(hwnd)))
+        return true;
     if (!hwnd || windowClass(hwnd) != L"#32770" || !IsWindowVisible(hwnd) || !IsWindowEnabled(hwnd))
         return false;
     DWORD pid = 0;
@@ -194,24 +216,33 @@ bool classicFileDialog(HWND hwnd) {
     return s.shell && s.ok;
 }
 bool genericCandidate(HWND hwnd) {
-    if (!hwnd || !IsWindowVisible(hwnd) || !IsWindowEnabled(hwnd) || IsHungAppWindow(hwnd)) return false;
-    DWORD pid = 0; GetWindowThreadProcessId(hwnd, &pid);
-    if (pid == g->pid || !pid) return false;
-    if (reinterpret_cast<ULONG_PTR>(GetPropW(hwnd, L"Jump.SaveBridge.v1")) == pid) return true;
+    if (!hwnd || !IsWindowVisible(hwnd) || !IsWindowEnabled(hwnd) || IsHungAppWindow(hwnd))
+        return false;
+    DWORD pid = 0;
+    GetWindowThreadProcessId(hwnd, &pid);
+    if (pid == g->pid || !pid)
+        return false;
+    if (reinterpret_cast<ULONG_PTR>(GetPropW(hwnd, L"Jump.SaveBridge.v1")) == pid)
+        return true;
     auto title = windowText(hwnd);
-    if (title.empty()) return false;
-    if (filename_controls::saveTitle(title)) return true;
+    if (title.empty())
+        return false;
+    if (filename_controls::saveTitle(title))
+        return true;
     // Owned modal dialogs can use document-specific or localized titles. Inspect
     // their controls before deciding; a title is a discovery hint, not a contract.
     auto owner = GetWindow(hwnd, GW_OWNER);
     DWORD ownerPid = 0;
-    if (owner && GetWindowThreadProcessId(owner, &ownerPid) && ownerPid == pid && !IsWindowEnabled(owner)) return true;
+    if (owner && GetWindowThreadProcessId(owner, &ownerPid) && ownerPid == pid && !IsWindowEnabled(owner))
+        return true;
     auto image = processImage(hwnd), cls = windowClass(hwnd);
-    return std::any_of(g->cfg.filenameBindings.begin(), g->cfg.filenameBindings.end(), [&](const auto &binding) {
-        return filename_controls::scope(binding, image, cls, title);
-    });
+    return std::any_of(
+        g->cfg.filenameBindings.begin(), g->cfg.filenameBindings.end(),
+        [&](const auto &binding) { return filename_controls::scope(binding, image, cls, title); });
 }
-bool looksLikeFileDialog(HWND hwnd) { return classicFileDialog(hwnd) || genericCandidate(hwnd); }
+bool looksLikeFileDialog(HWND hwnd) {
+    return classicFileDialog(hwnd) || genericCandidate(hwnd);
+}
 std::wstring sourceDirectory(HWND dialog, const std::wstring &filename) {
     std::vector<std::wstring> candidates = {filename};
     for (HWND owner = GetWindow(dialog, GW_OWNER); owner; owner = GetWindow(owner, GW_OWNER))
@@ -284,27 +315,42 @@ std::wstring extensionFromFormat(const std::wstring &text) {
 }
 bool nativeValueControl(HWND control, HWND dialog, const wchar_t *kind) {
     if (!control || !IsWindow(control) || GetAncestor(control, GA_ROOT) != dialog ||
-        windowClass(control) != kind || !IsWindowVisible(control) || !IsWindowEnabled(control)) return false;
+        windowClass(control) != kind || !IsWindowVisible(control) || !IsWindowEnabled(control))
+        return false;
     DWORD owner = 0, target = 0;
-    GetWindowThreadProcessId(control, &owner); GetWindowThreadProcessId(dialog, &target);
-    if (!owner || owner != target) return false;
-    return kind != std::wstring_view(L"Edit") || !(GetWindowLongPtrW(control, GWL_STYLE) & (ES_READONLY | ES_PASSWORD));
+    GetWindowThreadProcessId(control, &owner);
+    GetWindowThreadProcessId(dialog, &target);
+    if (!owner || owner != target)
+        return false;
+    return kind != std::wstring_view(L"Edit") ||
+           !(GetWindowLongPtrW(control, GWL_STYLE) & (ES_READONLY | ES_PASSWORD));
 }
 HWND verifiedNativeValueControl(IUIAutomation *uia, IUIAutomationElement *element, HWND dialog,
-                               const std::wstring &value, bool filename) {
-    if (!element) return nullptr;
+                                const std::wstring &value, bool filename) {
+    if (!element)
+        return nullptr;
     const wchar_t *kind = filename ? L"Edit" : L"ComboBox";
-    UIA_HWND handle = nullptr; element->get_CurrentNativeWindowHandle(&handle);
+    UIA_HWND handle = nullptr;
+    element->get_CurrentNativeWindowHandle(&handle);
     auto control = reinterpret_cast<HWND>(handle);
     if (!nativeValueControl(control, dialog, kind)) {
-        VARIANT type{}; type.vt = VT_I4; type.lVal = filename ? UIA_EditControlTypeId : UIA_ComboBoxControlTypeId;
-        ComPtr<IUIAutomationCondition> condition; uia->CreatePropertyCondition(UIA_ControlTypePropertyId, type, &condition);
+        VARIANT type{};
+        type.vt = VT_I4;
+        type.lVal = filename ? UIA_EditControlTypeId : UIA_ComboBoxControlTypeId;
+        ComPtr<IUIAutomationCondition> condition;
+        uia->CreatePropertyCondition(UIA_ControlTypePropertyId, type, &condition);
         ComPtr<IUIAutomationElementArray> children;
-        if (condition) element->FindAll(TreeScope_Descendants, condition.Get(), &children);
-        int count = 0; if (children) children->get_Length(&count);
+        if (condition)
+            element->FindAll(TreeScope_Descendants, condition.Get(), &children);
+        int count = 0;
+        if (children)
+            children->get_Length(&count);
         ComPtr<IUIAutomationElement> child;
-        if (count == 1) children->GetElement(0, &child);
-        handle = nullptr; if (child) child->get_CurrentNativeWindowHandle(&handle);
+        if (count == 1)
+            children->GetElement(0, &child);
+        handle = nullptr;
+        if (child)
+            child->get_CurrentNativeWindowHandle(&handle);
         control = reinterpret_cast<HWND>(handle);
     }
     // Bind only a native control beneath the UIA-identified filename/format.
@@ -316,18 +362,24 @@ bool inspectDialog(IUIAutomation *uia, const Job &job, DialogData &d) {
         return false;
     if (nativeValueControl(job.nameControl, job.hwnd, L"Edit") &&
         nativeValueControl(job.formatControl, job.hwnd, L"ComboBox")) {
-        d.nameControl = job.nameControl; d.formatControl = job.formatControl;
-        d.name = windowText(d.nameControl); d.format = windowText(d.formatControl);
+        d.nameControl = job.nameControl;
+        d.formatControl = job.formatControl;
+        d.name = windowText(d.nameControl);
+        d.format = windowText(d.formatControl);
     } else {
         ComPtr<IUIAutomationElement> root;
-        if (FAILED(uia->ElementFromHandle(job.hwnd, &root)) || !root) return false;
+        if (FAILED(uia->ElementFromHandle(job.hwnd, &root)) || !root)
+            return false;
         auto field = filenameElement(uia, root.Get(), job.hwnd);
         ComPtr<IUIAutomationValuePattern> value;
-        if (field) field->GetCurrentPatternAs(UIA_ValuePatternId, IID_PPV_ARGS(&value));
-        if (!value) return false;
+        if (field)
+            field->GetCurrentPatternAs(UIA_ValuePatternId, IID_PPV_ARGS(&value));
+        if (!value)
+            return false;
         d.name = automationValue(field.Get());
         auto type = findId(uia, root.Get(), L"FileTypeControlHost");
-        if (type) d.format = automationValue(type.Get());
+        if (type)
+            d.format = automationValue(type.Get());
         d.nameControl = verifiedNativeValueControl(uia, field.Get(), job.hwnd, d.name, true);
         d.formatControl = verifiedNativeValueControl(uia, type.Get(), job.hwnd, d.format, false);
     }
@@ -351,13 +403,16 @@ bool setFilename(IUIAutomation *uia, const Job &job, const std::wstring &text) {
     if (!sameTarget(job) || !focusAllowsAction(job))
         return false;
     if (nativeValueControl(job.nameControl, job.hwnd, L"Edit")) {
-        if (windowText(job.nameControl) == text) return true;
+        if (windowText(job.nameControl) == text)
+            return true;
         if (!sameTarget(job) || !focusAllowsAction(job) ||
-            !nativeValueControl(job.nameControl, job.hwnd, L"Edit")) return false;
+            !nativeValueControl(job.nameControl, job.hwnd, L"Edit"))
+            return false;
         DWORD_PTR written = 0;
         return SendMessageTimeoutW(job.nameControl, WM_SETTEXT, 0, reinterpret_cast<LPARAM>(text.c_str()),
-                   SMTO_ABORTIFHUNG | SMTO_BLOCK, 400, &written) && written && sameTarget(job) &&
-            nativeValueControl(job.nameControl, job.hwnd, L"Edit") && windowText(job.nameControl) == text;
+                                   SMTO_ABORTIFHUNG | SMTO_BLOCK, 400, &written) &&
+               written && sameTarget(job) && nativeValueControl(job.nameControl, job.hwnd, L"Edit") &&
+               windowText(job.nameControl) == text;
     }
     ComPtr<IUIAutomationElement> root;
     if (FAILED(uia->ElementFromHandle(job.hwnd, &root)) || !root)
@@ -466,13 +521,17 @@ std::vector<Location> explorerLocations() {
 }
 SaveProbe saveProbeFor(const DialogData &data) {
     SaveProbe probe;
-    if (!data.save || data.directory.empty() || data.name.empty()) return probe;
+    if (!data.save || data.directory.empty() || data.name.empty())
+        return probe;
     auto name = trim(data.name);
     bool quoted = name.size() >= 2 && name.front() == L'"' && name.back() == L'"';
-    if (quoted) name = name.substr(1, name.size() - 2);
+    if (quoted)
+        name = name.substr(1, name.size() - 2);
     std::filesystem::path file(name);
-    if (file.is_relative()) file = std::filesystem::path(data.directory) / file;
-    if (!validName(file.filename().wstring())) return probe;
+    if (file.is_relative())
+        file = std::filesystem::path(data.directory) / file;
+    if (!validName(file.filename().wstring()))
+        return probe;
     auto exact = file.wstring();
     // Native save dialogs can append the selected extension to a dotted name,
     // while quoted input requests the exact filename, including no extension.
@@ -499,32 +558,44 @@ struct SaveWatch {
             DWORD bytes = 0;
             GetOverlappedResult(directory, &io, &bytes, TRUE);
         }
-        if (directory != INVALID_HANDLE_VALUE) CloseHandle(directory);
-        if (event) CloseHandle(event);
+        if (directory != INVALID_HANDLE_VALUE)
+            CloseHandle(directory);
+        if (event)
+            CloseHandle(event);
     }
     bool arm() {
-        if (!event || directory == INVALID_HANDLE_VALUE) return false;
+        if (!event || directory == INVALID_HANDLE_VALUE)
+            return false;
         ResetEvent(event);
         io = {};
         io.hEvent = event;
         pending = ReadDirectoryChangesW(directory, buffer.data(), static_cast<DWORD>(sizeof(buffer)), FALSE,
-            FILE_NOTIFY_CHANGE_FILE_NAME | FILE_NOTIFY_CHANGE_SIZE | FILE_NOTIFY_CHANGE_LAST_WRITE,
-            nullptr, &io, nullptr) != 0;
+                                        FILE_NOTIFY_CHANGE_FILE_NAME | FILE_NOTIFY_CHANGE_SIZE |
+                                            FILE_NOTIFY_CHANGE_LAST_WRITE,
+                                        nullptr, &io, nullptr) != 0;
         return pending;
     }
     bool targetNotified() {
         DWORD bytes = 0;
         pending = false;
-        if (!GetOverlappedResult(directory, &io, &bytes, FALSE) || !bytes) return true;
+        if (!GetOverlappedResult(directory, &io, &bytes, FALSE) || !bytes)
+            return true;
         auto target = lower(std::filesystem::path(job.probe.file).filename().wstring());
         const auto *data = reinterpret_cast<const BYTE *>(buffer.data());
         for (DWORD offset = 0; offset + offsetof(FILE_NOTIFY_INFORMATION, FileName) <= bytes;) {
             auto info = reinterpret_cast<const FILE_NOTIFY_INFORMATION *>(data + offset);
-            if (info->FileNameLength > bytes - offset - offsetof(FILE_NOTIFY_INFORMATION, FileName)) break;
+            if (info->FileNameLength > bytes - offset - offsetof(FILE_NOTIFY_INFORMATION, FileName))
+                break;
             auto changed = lower(std::wstring(info->FileName, info->FileNameLength / sizeof(wchar_t)));
-            if (changed == target || std::any_of(job.probe.alternatives.begin(), job.probe.alternatives.end(),
-                [&](const SaveStamp &stamp) { return lower(std::filesystem::path(stamp.file).filename().wstring()) == changed; })) return true;
-            if (!info->NextEntryOffset || info->NextEntryOffset > bytes - offset) break;
+            if (changed == target ||
+                std::any_of(job.probe.alternatives.begin(), job.probe.alternatives.end(),
+                            [&](const SaveStamp &stamp) {
+                                return lower(std::filesystem::path(stamp.file).filename().wstring()) ==
+                                       changed;
+                            }))
+                return true;
+            if (!info->NextEntryOffset || info->NextEntryOffset > bytes - offset)
+                break;
             offset += info->NextEntryOffset;
         }
         return false;
@@ -535,34 +606,48 @@ void publishSaveCheck(const Job &job, bool saved) {
     result->job = job;
     result->saved = saved;
     if (saved) {
-        if (savedStampChanged(job.probe)) result->verifiedFile = job.probe.file;
-        else for (const auto &alternative : job.probe.alternatives)
-            if (savedStampChanged(alternative)) { result->verifiedFile = alternative.file; break; }
+        if (savedStampChanged(job.probe))
+            result->verifiedFile = job.probe.file;
+        else
+            for (const auto &alternative : job.probe.alternatives)
+                if (savedStampChanged(alternative)) {
+                    result->verifiedFile = alternative.file;
+                    break;
+                }
     }
-    if (PostMessageW(g->control, WM_RESULT, 0, reinterpret_cast<LPARAM>(result.get()))) result.release();
+    if (PostMessageW(g->control, WM_RESULT, 0, reinterpret_cast<LPARAM>(result.get())))
+        result.release();
 }
 void enqueue(Job job) {
     if (job.type == JobType::Inspect)
         job.bridge = reinterpret_cast<ULONG_PTR>(GetPropW(job.hwnd, L"Jump.SaveBridge.v1")) == job.pid;
     else if (job.type != JobType::VerifySave) {
-        job.bridge = g->dialog.bridge; job.bridgeRevision = g->dialog.bridgeRevision;
+        job.bridge = g->dialog.bridge;
+        job.bridgeRevision = g->dialog.bridgeRevision;
     }
-    if (job.type == JobType::Inspect) job.blender = blenderBrowserWindow(job.hwnd);
-    else if (job.type != JobType::VerifySave) job.blender = g->dialog.blender;
-    if (job.type == JobType::Inspect) job.houdini = houdiniBrowserWindow(job.hwnd);
-    else if (job.type != JobType::VerifySave) job.houdini = g->dialog.houdini;
+    if (job.type == JobType::Inspect)
+        job.blender = blenderBrowserWindow(job.hwnd);
+    else if (job.type != JobType::VerifySave)
+        job.blender = g->dialog.blender;
+    if (job.type == JobType::Inspect)
+        job.houdini = houdiniBrowserWindow(job.hwnd);
+    else if (job.type != JobType::VerifySave)
+        job.houdini = g->dialog.houdini;
     if (job.type == JobType::Refresh || job.type == JobType::Apply) {
         job.saveDialog = g->dialog.save;
-        job.nameControl = g->dialog.nameControl; job.formatControl = g->dialog.formatControl;
+        job.nameControl = g->dialog.nameControl;
+        job.formatControl = g->dialog.formatControl;
     }
     if (job.type == JobType::Inspect || job.type == JobType::BindControl) {
         job.generic = !job.blender && !job.houdini && !classicFileDialog(job.hwnd);
         job.bindings = g->cfg.filenameBindings;
     } else if (job.type != JobType::VerifySave) {
-        job.generic = g->dialog.generic; job.selector = g->dialog.selector;
+        job.generic = g->dialog.generic;
+        job.selector = g->dialog.selector;
         job.controlScope = g->dialog.controlScope;
         if (job.type == JobType::Apply) {
-            job.expectedRawName = g->dialog.rawName; job.expectedDirectory = g->dialog.directory;
+            job.expectedRawName = g->dialog.rawName;
+            job.expectedDirectory = g->dialog.directory;
             job.expectedExtension = g->dialog.extension;
             job.submitSelector = g->dialog.submitSelector;
         }
@@ -577,14 +662,18 @@ void enqueue(Job job) {
     SetEvent(g->workEvent);
 }
 void publishResult(std::unique_ptr<Result> result, bool preserveSaveProbe) {
-    if(result->job.type==JobType::Apply&&result->error.empty()&&!result->probe.file.empty()&&
-       lower(stripExtension(std::filesystem::path(result->probe.file).filename().wstring(),result->job.expectedExtension))==lower(result->job.name)){
-        result->probe.namingStructure=result->job.namingStructure;result->probe.namingProject=result->job.namingProject;result->probe.namingKnown=true;
+    if (result->job.type == JobType::Apply && result->error.empty() && !result->probe.file.empty() &&
+        lower(stripExtension(std::filesystem::path(result->probe.file).filename().wstring(),
+                             result->job.expectedExtension)) == lower(result->job.name)) {
+        result->probe.namingStructure = result->job.namingStructure;
+        result->probe.namingProject = result->job.namingProject;
+        result->probe.namingKnown = true;
     }
     // Closing a save dialog may detach the panel before its verified target arrives.
-    if (g->generation.load() != result->job.generation &&
-        !(preserveSaveProbe && !result->probe.file.empty())) return;
-    if (PostMessageW(g->control, WM_RESULT, 0, reinterpret_cast<LPARAM>(result.get()))) result.release();
+    if (g->generation.load() != result->job.generation && !(preserveSaveProbe && !result->probe.file.empty()))
+        return;
+    if (PostMessageW(g->control, WM_RESULT, 0, reinterpret_cast<LPARAM>(result.get())))
+        result.release();
 }
 DWORD WINAPI workerMain(void *) {
     CoInitializeEx(nullptr, COINIT_MULTITHREADED);
@@ -603,8 +692,10 @@ DWORD WINAPI workerMain(void *) {
             }
         }
         std::vector<HANDLE> handles{g->workEvent};
-        for (auto &watch : watches) handles.push_back(watch->event);
-        auto wake = WaitForMultipleObjects(static_cast<DWORD>(handles.size()), handles.data(), FALSE, timeout);
+        for (auto &watch : watches)
+            handles.push_back(watch->event);
+        auto wake =
+            WaitForMultipleObjects(static_cast<DWORD>(handles.size()), handles.data(), FALSE, timeout);
         if (g->stopWorker.load())
             break;
         if (wake >= WAIT_OBJECT_0 + 1 && wake < WAIT_OBJECT_0 + handles.size()) {
@@ -631,19 +722,21 @@ DWORD WINAPI workerMain(void *) {
                 Sleep(g->testFillDelayMs);
             if (job.type == JobType::VerifySave) {
                 if (savedFileChanged(job.probe)) {
-                    std::erase_if(watches, [&](const auto &watch) { return watch->job.probe.file == job.probe.file; });
+                    std::erase_if(watches,
+                                  [&](const auto &watch) { return watch->job.probe.file == job.probe.file; });
                     publishSaveCheck(job, true);
                     continue;
                 }
-                if (std::any_of(watches.begin(), watches.end(), [&](const auto &watch) {
-                        return watch->job.probe.file == job.probe.file;
-                    })) continue;
+                if (std::any_of(watches.begin(), watches.end(),
+                                [&](const auto &watch) { return watch->job.probe.file == job.probe.file; }))
+                    continue;
                 auto watch = std::make_unique<SaveWatch>();
                 watch->job = job;
                 watch->job.verifyAttempt = 4;
-                watch->directory = CreateFileW(job.probe.directory.c_str(), FILE_LIST_DIRECTORY,
-                    FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING,
-                    FILE_FLAG_BACKUP_SEMANTICS | FILE_FLAG_OVERLAPPED, nullptr);
+                watch->directory =
+                    CreateFileW(job.probe.directory.c_str(), FILE_LIST_DIRECTORY,
+                                FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, nullptr,
+                                OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS | FILE_FLAG_OVERLAPPED, nullptr);
                 watch->event = CreateEventW(nullptr, TRUE, FALSE, nullptr);
                 if (!watch->arm()) {
                     // Filesystems without notifications retain a brief bounded fallback.
@@ -652,7 +745,8 @@ DWORD WINAPI workerMain(void *) {
                     // Close the race between the first metadata read and arming notifications.
                     publishSaveCheck(watch->job, true);
                 } else {
-                    if (watches.size() >= 32) watches.erase(watches.begin());
+                    if (watches.size() >= 32)
+                        watches.erase(watches.begin());
                     watches.push_back(std::move(watch));
                 }
                 continue;
@@ -660,49 +754,69 @@ DWORD WINAPI workerMain(void *) {
             if (!sameTarget(job))
                 continue;
             if (job.type == JobType::ResolvePaste) {
-                auto result = std::make_unique<Result>(); result->job = job;
+                auto result = std::make_unique<Result>();
+                result->job = job;
                 resolvePastedTarget(*result);
                 publishResult(std::move(result), false);
                 continue;
             }
             if (job.bridge) {
-                auto result = std::make_unique<Result>(); result->job = job;
+                auto result = std::make_unique<Result>();
+                result->job = job;
                 applySaveBridge(job, *result);
                 publishResult(std::move(result), true);
                 continue;
             }
             if (job.blender || job.houdini) {
-                auto result = std::make_unique<Result>(); result->job = job;
+                auto result = std::make_unique<Result>();
+                result->job = job;
                 auto request = [&](const wchar_t *verb, const std::wstring &directory = L"",
-                                   const std::wstring &name = L"", const std::wstring &extension = L"", bool submit = false) {
-                    return blender_bridge::request(job.hwnd, job.pid, g->panel, verb, directory, name, extension, submit,
-                        job.houdini ? L"Houdini" : L"Blender", job.houdini ? L"JUMP_HOUDINI_1" : L"JUMP_BLENDER_1");
+                                   const std::wstring &name = L"", const std::wstring &extension = L"",
+                                   bool submit = false) {
+                    return blender_bridge::request(job.hwnd, job.pid, g->panel, verb, directory, name,
+                                                   extension, submit, job.houdini ? L"Houdini" : L"Blender",
+                                                   job.houdini ? L"JUMP_HOUDINI_1" : L"JUMP_BLENDER_1");
                 };
                 auto snapshot = request(L"INSPECT");
                 auto adopt = [&](const blender_bridge::Reply &reply) {
-                    result->data.hwnd = job.hwnd; result->data.pid = job.pid;
-                    result->data.blender = job.blender; result->data.houdini = job.houdini; result->data.save = reply.save;
+                    result->data.hwnd = job.hwnd;
+                    result->data.pid = job.pid;
+                    result->data.blender = job.blender;
+                    result->data.houdini = job.houdini;
+                    result->data.save = reply.save;
                     result->data.process = job.houdini ? processName(job.hwnd) : L"blender.exe";
-                    result->data.name = reply.name; result->data.directory = reply.directory;
-                    result->data.extension = reply.extension; result->data.format = reply.format;
+                    result->data.name = reply.name;
+                    result->data.directory = reply.directory;
+                    result->data.extension = reply.extension;
+                    result->data.format = reply.format;
                     result->data.source = reply.source;
                 };
-                if (!snapshot.ok) result->error = snapshot.error;
+                if (!snapshot.ok)
+                    result->error = snapshot.error;
                 else {
-                    adopt(snapshot); result->probe = saveProbeFor(result->data);
-                    if (job.type == JobType::Inspect) result->opened = explorerLocations();
+                    adopt(snapshot);
+                    result->probe = saveProbeFor(result->data);
+                    if (job.type == JobType::Inspect)
+                        result->opened = explorerLocations();
                     if (job.type == JobType::Apply) {
-                        if (!sameTarget(job) || !focusAllowsAction(job)) result->error = L"前台或原文件窗口已改变，未执行操作。";
-                        else if (snapshot.save && !validName(job.name)) result->error = L"请输入有效的文件名。";
+                        if (!sameTarget(job) || !focusAllowsAction(job))
+                            result->error = L"前台或原文件窗口已改变，未执行操作。";
+                        else if (snapshot.save && !validName(job.name))
+                            result->error = L"请输入有效的文件名。";
                         else {
                             auto destination = result->data;
                             destination.name = job.name + snapshot.extension;
-                            if (!job.directory.empty()) destination.directory = job.directory;
+                            if (!job.directory.empty())
+                                destination.directory = job.directory;
                             result->probe = saveProbeFor(destination);
-                            auto reply = request(L"APPLY", job.directory, job.name, snapshot.extension, job.submit);
-                            if (!reply.ok) result->error = reply.error;
+                            auto reply =
+                                request(L"APPLY", job.directory, job.name, snapshot.extension, job.submit);
+                            if (!reply.ok)
+                                result->error = reply.error;
                             else {
-                                adopt(reply); result->navigated = reply.navigated; result->submitted = reply.submitted;
+                                adopt(reply);
+                                result->navigated = reply.navigated;
+                                result->submitted = reply.submitted;
                             }
                         }
                     }
@@ -714,18 +828,24 @@ DWORD WINAPI workerMain(void *) {
                 CoCreateInstance(CLSID_CUIAutomation, nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&uia));
                 ComPtr<IUIAutomation2> bounded;
                 if (uia && SUCCEEDED(uia.As(&bounded))) {
-                    bounded->put_ConnectionTimeout(500); bounded->put_TransactionTimeout(700);
+                    bounded->put_ConnectionTimeout(500);
+                    bounded->put_TransactionTimeout(700);
                 }
             }
             if (job.type == JobType::BindControl || job.generic) {
-                auto result = std::make_unique<Result>(); result->job = job;
+                auto result = std::make_unique<Result>();
+                result->job = job;
                 ComPtr<IUIAutomationElement> field;
-                if (!uia) result->error = L"辅助功能接口不可用。";
-                else if (job.type == JobType::BindControl) bindFilenameControl(uia.Get(), job, *result);
+                if (!uia)
+                    result->error = L"辅助功能接口不可用。";
+                else if (job.type == JobType::BindControl)
+                    bindFilenameControl(uia.Get(), job, *result);
                 else if (!inspectGeneric(uia.Get(), job, result->data, field))
                     result->error = L"未找到唯一可写的文件名控件；可从设置中心“软件接入”指定。";
-                else if (job.type == JobType::Apply) applyGeneric(uia.Get(), job, *result, field.Get());
-                if (result->error.empty() && !result->submitted) result->probe = saveProbeFor(result->data);
+                else if (job.type == JobType::Apply)
+                    applyGeneric(uia.Get(), job, *result, field.Get());
+                if (result->error.empty() && !result->submitted)
+                    result->probe = saveProbeFor(result->data);
                 publishResult(std::move(result), true);
                 continue;
             }

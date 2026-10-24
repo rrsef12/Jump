@@ -130,8 +130,8 @@ struct SmartNaming {
     bool upperVersion = false;
 };
 RenamePreview smartNamingPreview(const std::wstring &source, const std::wstring &directory,
-                                const std::wstring &extension, const SmartNaming &options,
-                                const std::function<bool()> &cancelled = {});
+                                 const std::wstring &extension, const SmartNaming &options,
+                                 const std::function<bool()> &cancelled = {});
 const Project *activeProject(const Config &cfg);
 std::wstring projectPath(const Project &project, const std::wstring &relative);
 std::wstring mergedVariables(const std::wstring &defaults, const std::wstring &project);

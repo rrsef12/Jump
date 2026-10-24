@@ -59,7 +59,7 @@ struct State {
     bool namingPending = false, namingSubmit = false, numberingApproved = false;
     std::unique_ptr<jump::SaveTargetWorker> targetWorker;
     std::wstring targetPath;
-    unsigned long long targetGeneration=0;
+    unsigned long long targetGeneration = 0;
     std::optional<jump::SaveTargetInfo> targetInfo;
     jump::NamingHistory namingHistory;
     jump::StructuredNaming structure;
@@ -83,9 +83,16 @@ struct State {
     std::wstring structuredProject;
     std::optional<jump::RecentSubject> nativeSubjectPending;
     ULONG_PTR draftToken = 0;
-    struct Draft { HWND hwnd{}; DWORD pid{}; std::wstring observed, directory, original, originalDirectory;
-        jump::NamingSnapshot naming; jump::NamingHistory history; std::optional<jump::NamingSnapshot> recovery;
-        std::wstring project; ULONG_PTR token=0; };
+    struct Draft {
+        HWND hwnd{};
+        DWORD pid{};
+        std::wstring observed, directory, original, originalDirectory;
+        jump::NamingSnapshot naming;
+        jump::NamingHistory history;
+        std::optional<jump::NamingSnapshot> recovery;
+        std::wstring project;
+        ULONG_PTR token = 0;
+    };
     std::vector<Draft> namingDrafts;
     std::wstring sessionExpression, sessionVariables;
     int sessionDigits = 0, sessionDateFormat = -1;
@@ -105,8 +112,7 @@ struct State {
     bool presetEditor = false;
     size_t presetIndex = static_cast<size_t>(-1);
     std::wstring presetDraft;
-    bool attached = false, busy = false, paused = false,
-         building = false, dirtyName = false, dark = false;
+    bool attached = false, busy = false, paused = false, building = false, dirtyName = false, dark = false;
     HWND suppressed{};
     std::atomic<ULONGLONG> generation{0};
     std::mutex jobsMutex;
@@ -130,8 +136,9 @@ struct State {
     bool panelMaterial = false, solidMaterial = false, animations = true;
     std::map<HWND, HoverMotion> hoverMotions;
     HBRUSH brush{}, inputBrush{};
-    COLORREF field{}, surface{}, primary{}, bg = RGB(255, 255, 255), fg = RGB(35, 40, 50), muted = RGB(100, 108, 120),
-             line = RGB(220, 225, 234), accent = RGB(46, 91, 190), selection = RGB(237, 243, 255);
+    COLORREF field{}, surface{}, primary{}, bg = RGB(255, 255, 255), fg = RGB(35, 40, 50),
+                                            muted = RGB(100, 108, 120), line = RGB(220, 225, 234),
+                                            accent = RGB(46, 91, 190), selection = RGB(237, 243, 255);
     int dpi = 96, width = 320, height = 500;
     std::vector<HWND> children;
     std::map<int, ButtonAction> actions;

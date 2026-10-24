@@ -4,7 +4,8 @@
 bool panelTransparencyAllowed() {
     HIGHCONTRASTW contrast{sizeof(contrast)};
     SystemParametersInfoW(SPI_GETHIGHCONTRAST, sizeof(contrast), &contrast, 0);
-    if (g->solidMaterial || (contrast.dwFlags & HCF_HIGHCONTRASTON) || GetSystemMetrics(SM_REMOTESESSION)) return false;
+    if (g->solidMaterial || (contrast.dwFlags & HCF_HIGHCONTRASTON) || GetSystemMetrics(SM_REMOTESESSION))
+        return false;
     DWORD enabled = 1, size = sizeof(enabled);
     RegGetValueW(HKEY_CURRENT_USER, L"Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize",
                  L"EnableTransparency", RRF_RT_REG_DWORD, nullptr, &enabled, &size);
@@ -18,7 +19,8 @@ void configureMaterialEditor(HWND editor) {
     if (g->panelMaterial) {
         SetWindowLongPtrW(editor, GWL_EXSTYLE, style | WS_EX_LAYERED);
         SetLayeredWindowAttributes(editor, 0, 255, LWA_ALPHA);
-    } else if (style & WS_EX_LAYERED) SetWindowLongPtrW(editor, GWL_EXSTYLE, style & ~WS_EX_LAYERED);
+    } else if (style & WS_EX_LAYERED)
+        SetWindowLongPtrW(editor, GWL_EXSTYLE, style & ~WS_EX_LAYERED);
 }
 void updatePanelMaterial() {
     BOOL composition = FALSE, animation = TRUE;
@@ -28,18 +30,22 @@ void updatePanelMaterial() {
     // Numeric attributes keep the binary compatible with older Windows SDKs.
     // SYSTEMBACKDROP_TYPE (38): NONE=1, TRANSIENTWINDOW=3 (Desktop Acrylic).
     DWORD backdrop = composition && panelTransparencyAllowed() ? 3 : 1;
-    g->panelMaterial = SUCCEEDED(DwmSetWindowAttribute(g->panel, 38, &backdrop, sizeof(backdrop))) && backdrop == 3;
+    g->panelMaterial =
+        SUCCEEDED(DwmSetWindowAttribute(g->panel, 38, &backdrop, sizeof(backdrop))) && backdrop == 3;
     MARGINS glass = g->panelMaterial ? MARGINS{-1, -1, -1, -1} : MARGINS{};
     if (FAILED(DwmExtendFrameIntoClientArea(g->panel, &glass))) {
         g->panelMaterial = false;
         backdrop = 1;
         DwmSetWindowAttribute(g->panel, 38, &backdrop, sizeof(backdrop));
-        MARGINS reset{}; DwmExtendFrameIntoClientArea(g->panel, &reset);
+        MARGINS reset{};
+        DwmExtendFrameIntoClientArea(g->panel, &reset);
     }
-    SetPropW(g->panel, L"Jump.Material", reinterpret_cast<HANDLE>(static_cast<INT_PTR>(g->panelMaterial ? 1 : 0)));
+    SetPropW(g->panel, L"Jump.Material",
+             reinterpret_cast<HANDLE>(static_cast<INT_PTR>(g->panelMaterial ? 1 : 0)));
     for (auto child : g->children) {
         auto cls = windowClass(child);
-        if (cls == L"Edit" || cls == MSFTEDIT_CLASS) configureMaterialEditor(child);
+        if (cls == L"Edit" || cls == MSFTEDIT_CLASS)
+            configureMaterialEditor(child);
     }
 }
 
@@ -57,7 +63,8 @@ void prepareMaterialPixels(DWORD *pixels, size_t count, bool backdrop) {
         if (backdrop && rgb == background) {
             constexpr DWORD alpha = 224;
             pixels[i] = (alpha << 24) | ((GetRValue(g->bg) * alpha / 255) << 16) |
-                ((GetGValue(g->bg) * alpha / 255) << 8) | (GetBValue(g->bg) * alpha / 255);
-        } else pixels[i] = rgb | 0xff000000;
+                        ((GetGValue(g->bg) * alpha / 255) << 8) | (GetBValue(g->bg) * alpha / 255);
+        } else
+            pixels[i] = rgb | 0xff000000;
     }
 }
