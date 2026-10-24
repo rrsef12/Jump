@@ -1,0 +1,11 @@
+{
+  "passed": [
+    "single-part overview exposes eight options and batch preview; empty/custom separators survive navigation; batch results preserve extensions and leave simulation input intact",
+    "compact preview edits original-name simulation on the rules page; three/eight-part layouts keep direct actions aligned and separate from wrapped names and condition summaries",
+    "eight content types coexist, including automatic project/date, editable categories, fixed text and independent manual numbering",
+    "a reduced resizable viewport and 100/150/native-percent DPI change messages preserve both the eight-part draft and isolated simulation input",
+    "long names and abbreviated conditions stay separate at 100/150/200/native-percent DPI; Save/Cancel remain fixed while scrolling, resizing and correcting errors; reverting edits clears dirty state and simulation never marks rules dirty",
+    "correction preserves invalid text and reveals the focused input after shrinking; behavior is distinct from source editing; cancelling all eight parts writes no recipe"
+  ],
+  "output": "D:\\Code\\Jump\\tests\\output\\scheme-task-layout\\e1d53a19d4"
+}

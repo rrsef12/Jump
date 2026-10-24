@@ -1,0 +1,8 @@
+{
+  "passed": [
+    "legacy startup choice migrates once; manager sets global and application defaults without altering the live draft; temporary switching preserves both defaults",
+    "panel sets independent defaults for two executable names; restarts apply the correct override or global fallback; clearing one override keeps the other",
+    "existing application assignments can be changed centrally; deleting a custom default removes its references and safely falls back to the asset scheme"
+  ],
+  "output": "D:\\Code\\Jump\\tests\\output\\default-schemes\\bad81c841f"
+}

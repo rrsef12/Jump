@@ -1,0 +1,185 @@
+{
+  "date": "2026-10-20",
+  "createdUtc": "2026-10-20T14:33:08.698847+00:00",
+  "screenshots": [
+    {
+      "source": {
+        "path": "tests/output/unified-scheme/73927b31df/simple-overview.png",
+        "sha256": "32dfa08167fe03f045d51d7614a2b385e7aeae7cf48559ea98af347452315cfd"
+      },
+      "delivered": {
+        "path": "docs/assets/naming-editor-visual-2026-10-20/three-parts.png",
+        "sha256": "32dfa08167fe03f045d51d7614a2b385e7aeae7cf48559ea98af347452315cfd"
+      }
+    },
+    {
+      "source": {
+        "path": "tests/output/scheme-task-layout/f24a79acf2/eight-parts-top.png",
+        "sha256": "46adb3e1c964ad8a051ee89a21dbe6a00aa2ac29c0a57e46821fa55c5876c24f"
+      },
+      "delivered": {
+        "path": "docs/assets/naming-editor-visual-2026-10-20/eight-parts-top.png",
+        "sha256": "46adb3e1c964ad8a051ee89a21dbe6a00aa2ac29c0a57e46821fa55c5876c24f"
+      }
+    },
+    {
+      "source": {
+        "path": "tests/output/scheme-task-layout/f24a79acf2/eight-parts-bottom.png",
+        "sha256": "8be8f4ae99787a03d85552fa0ee6d0bc778c123bc3b89cd3acedbfe0c3e64a66"
+      },
+      "delivered": {
+        "path": "docs/assets/naming-editor-visual-2026-10-20/eight-parts-bottom.png",
+        "sha256": "8be8f4ae99787a03d85552fa0ee6d0bc778c123bc3b89cd3acedbfe0c3e64a66"
+      }
+    },
+    {
+      "source": {
+        "path": "tests/output/scheme-task-layout/f24a79acf2/eight-parts-dpi-144-top.png",
+        "sha256": "19c7ac8118edfa2949189019391f11e673cab3806375fd3eb008e3542cf381b9"
+      },
+      "delivered": {
+        "path": "docs/assets/naming-editor-visual-2026-10-20/eight-parts-150-top.png",
+        "sha256": "19c7ac8118edfa2949189019391f11e673cab3806375fd3eb008e3542cf381b9"
+      }
+    },
+    {
+      "source": {
+        "path": "tests/output/scheme-task-layout/f24a79acf2/eight-parts-dpi-192-bottom.png",
+        "sha256": "8a4704387d47bff182fbb38e72573b48c39878983c8bb3273c218458fe91ff57"
+      },
+      "delivered": {
+        "path": "docs/assets/naming-editor-visual-2026-10-20/eight-parts-200-bottom.png",
+        "sha256": "8a4704387d47bff182fbb38e72573b48c39878983c8bb3273c218458fe91ff57"
+      }
+    },
+    {
+      "source": {
+        "path": "tests/output/unified-scheme/73927b31df/starter-simulation.png",
+        "sha256": "09fe9c05bd318ee551c64ce196a2d9406183404f71d04bf1d53f49c2ddb1234d"
+      },
+      "delivered": {
+        "path": "docs/assets/naming-editor-visual-2026-10-20/simulation.png",
+        "sha256": "09fe9c05bd318ee551c64ce196a2d9406183404f71d04bf1d53f49c2ddb1234d"
+      }
+    },
+    {
+      "source": {
+        "path": "tests/output/unified-scheme/73927b31df/part-details.png",
+        "sha256": "b9ac4efd8517942ae38080e3c6300f70eaccc1031895c227bae6686ea6a68e77"
+      },
+      "delivered": {
+        "path": "docs/assets/naming-editor-visual-2026-10-20/part-details.png",
+        "sha256": "b9ac4efd8517942ae38080e3c6300f70eaccc1031895c227bae6686ea6a68e77"
+      }
+    },
+    {
+      "source": {
+        "path": "tests/output/unified-scheme/73927b31df/usage-scope.png",
+        "sha256": "bebb2557d6cd7933e3109fc82965d97196eefeff63940268ad437fd3a6804f39"
+      },
+      "delivered": {
+        "path": "docs/assets/naming-editor-visual-2026-10-20/usage-scope.png",
+        "sha256": "bebb2557d6cd7933e3109fc82965d97196eefeff63940268ad437fd3a6804f39"
+      }
+    },
+    {
+      "source": {
+        "path": "tests/output/unified-scheme/73927b31df/rule-error.png",
+        "sha256": "3361b7b2bc5d34e41921797b1960a245432576992bad4c9d187736dec03534bc"
+      },
+      "delivered": {
+        "path": "docs/assets/naming-editor-visual-2026-10-20/rule-error.png",
+        "sha256": "3361b7b2bc5d34e41921797b1960a245432576992bad4c9d187736dec03534bc"
+      }
+    }
+  ],
+  "reports": [
+    {
+      "source": {
+        "path": "tests/output/unified-scheme/73927b31df/report.json",
+        "sha256": "551a380032fb9fb08edeb83541286b5cd261d9d8dd597d4d2ef1deea2cbb15d4"
+      },
+      "delivered": {
+        "path": "docs/evidence/naming-editor-visual-2026-10-20/unified-scheme.json",
+        "sha256": "551a380032fb9fb08edeb83541286b5cd261d9d8dd597d4d2ef1deea2cbb15d4"
+      },
+      "passedScenarioGroups": 14
+    },
+    {
+      "source": {
+        "path": "tests/output/scheme-task-layout/f24a79acf2/report.json",
+        "sha256": "52f1d38bdf258e422c1f60398ade40af908a0e5a5bf383ffab1abc1570918cea"
+      },
+      "delivered": {
+        "path": "docs/evidence/naming-editor-visual-2026-10-20/scheme-task-layout.json",
+        "sha256": "52f1d38bdf258e422c1f60398ade40af908a0e5a5bf383ffab1abc1570918cea"
+      },
+      "passedScenarioGroups": 5
+    },
+    {
+      "source": {
+        "path": "tests/output/settings-center/fe8f21855c/report.json",
+        "sha256": "89045c72f540c1e743da4a8cbaecfa8648687a34bb65c7663689e152268172ed"
+      },
+      "delivered": {
+        "path": "docs/evidence/naming-editor-visual-2026-10-20/settings-center.json",
+        "sha256": "89045c72f540c1e743da4a8cbaecfa8648687a34bb65c7663689e152268172ed"
+      },
+      "passedScenarioGroups": 8
+    },
+    {
+      "source": {
+        "path": "tests/output/default-schemes/a3f0a72110/report.json",
+        "sha256": "f21c0429db1e72341a4e3d2e3e91b60b785f35025970958de0cc225cab25e382"
+      },
+      "delivered": {
+        "path": "docs/evidence/naming-editor-visual-2026-10-20/default-schemes.json",
+        "sha256": "f21c0429db1e72341a4e3d2e3e91b60b785f35025970958de0cc225cab25e382"
+      },
+      "passedScenarioGroups": 3
+    }
+  ],
+  "sourceFiles": [
+    {
+      "path": "src/naming_designer.h",
+      "sha256": "efc0dfb5352879b8877756aaf32d6c5d1dc4e09d126022a98b0fb3e3547ecc39"
+    },
+    {
+      "path": "src/naming_designer_layout.h",
+      "sha256": "cc212b2b481777e148533ebda0111aa37ebf132f8745fd6941f56cabca4d2b64"
+    },
+    {
+      "path": "src/naming_designer_preview.h",
+      "sha256": "54e50b57135e25d6726a5db511da723ef29446222ef548f915149b00265dcfbe"
+    },
+    {
+      "path": "tests/scheme_tasks_layout_integration.py",
+      "sha256": "5bed87814ce1cdba661b7102075f05214deb7674eb6de72995fedaffd7524538"
+    },
+    {
+      "path": "README.md",
+      "sha256": "64f79e575c2069b70a0997af8c6309935dc58d37e78383c432c29a005d8f237b"
+    }
+  ],
+  "build": [
+    {
+      "path": "build/Jump.exe",
+      "sha256": "78c0df60aa5c91c744f442890a7839fa334f03c700fe4fbeb1fc66a1b5673757"
+    },
+    {
+      "path": "build/Jump.TestHost.exe",
+      "sha256": "82ecf60ba6197e7a77034ff7f043d29c02aca9f8d8a62221efb55ee2c992788c"
+    }
+  ],
+  "devConfig": {
+    "path": "build/dev/settings.ini",
+    "sha256": "9298186a918885bce9b49cd7206b8bbf36f7b8f837da33efc327e359cb9fa769",
+    "unchanged": true,
+    "included": false
+  },
+  "limits": [
+    "DPI message tests; no physical multi-monitor test.",
+    "No real novice usability study.",
+    "Screenshots use owned test fixtures, not user settings."
+  ]
+}

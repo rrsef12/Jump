@@ -1,0 +1,13 @@
+{
+  "passed": [
+    "all nine sections share one settings window; startup DPI and section bounds fit",
+    "options edit directly inside the scheme; section navigation protects the shared draft and confirmed discard writes nothing",
+    "inline favorite drafts survive rejected navigation, row changes and close; unrelated config writes exclude new drafts; duplicate paths are blocked and failed saves retain inputs for retry",
+    "general options and affix categories protect drafts; blocked filesystem writes roll back configuration and can be retried without retyping; successful saves need no modal acknowledgment",
+    "variable token rebuilds preserve the original dirty baseline; saved template clears its draft state",
+    "project forms edit inside the center; cancelled drafts leave configuration intact and saved projects persist",
+    "backup and diagnostics operate in their sections; diagnostic copying opens no extra window",
+    "closing the center protects an active draft; cancelling the editor then closes normally"
+  ],
+  "output": "D:\\Code\\Jump\\tests\\output\\settings-center\\57f73038e2"
+}

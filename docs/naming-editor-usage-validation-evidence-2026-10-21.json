@@ -1,0 +1,136 @@
+{
+  "date": "2026-10-21",
+  "build": "Debug through dev.ps1; dist untouched",
+  "checks": {
+    "scheme_usage_scenarios_integration.py": {
+      "groups": 3,
+      "passed": [
+        "one part: Rock and empty original follow the actual source without Asset fallback; choices remain one action away; impossible reorder/delete are disabled; preview, cancelled menu and Cancel leave configuration untouched",
+        "four configured fields: SM_Rock_WIP_v001 with an empty optional detail; default/option mapping, live numbering, simulation isolation and revert all work; the scheme menu copies the full draft without software/global defaults and Cancel discards it",
+        "eight fields: long custom names, conditional omission/inclusion, local LOD/revision formatting, direct row actions and fixed footer remain readable; invalid rules can be repaired without losing input; route states reflect effective configuration and toggles retain all three rules"
+      ],
+      "source": "D:\\Code\\Jump\\tests\\output\\scheme-usage-scenarios\\76bb20a91d"
+    },
+    "scheme_tasks_layout_integration.py": {
+      "groups": 7,
+      "passed": [
+        "single-part overview exposes eight options and batch preview; empty/custom separators survive navigation; batch results preserve extensions and leave simulation input intact",
+        "compact preview edits original-name simulation on the rules page; three/eight-part layouts keep direct actions aligned and separate from wrapped names and condition summaries",
+        "eight content types coexist, including automatic project/date, editable categories, fixed text and independent manual numbering",
+        "a reduced resizable viewport and 100/150/native-percent DPI change messages preserve both the eight-part draft and isolated simulation input",
+        "long names and abbreviated conditions stay separate at 100/150/200/native-percent DPI; Save/Cancel remain fixed while scrolling, resizing and correcting errors; reverting edits clears dirty state and simulation never marks rules dirty",
+        "correction preserves invalid text and reveals the focused input after shrinking; behavior is distinct from source editing; cancelling all eight parts writes no recipe",
+        "date formats are edited beside date parts, remain shared across automatic date sources and survive source changes; numbering and same-name checks keep their settings through Save and reopen; invalid separators locate the visible overview control"
+      ],
+      "source": "D:\\Code\\Jump\\tests\\output\\scheme-task-layout\\b0aae65195"
+    },
+    "unified_scheme_integration.py": {
+      "groups": 15,
+      "passed": [
+        "the fixed footer tracks actual rule and scope edits, clears when edits are reverted, and excludes all simulation input",
+        "the compact overview edits common values, separators and numbering directly; examples retain separate drafts; cancelling preserves the original scheme",
+        "the explicit starter creates category_original_v001; display names map to SM; simulation numbering is labeled; usage scope states precedence and manual entry",
+        "existing output formatting remains editable on demand and survives returning to the overview without rewriting values",
+        "Add contains only fields; custom and fixed content edit in place without another form; removal restores the original composition",
+        "simulation uses the production composer, explains conditional omissions, survives task switches, and never persists as scheme defaults",
+        "invalid advanced rules name the affected part and provide direct correction; choices and conditions have independent task pages",
+        "category T enables texture usage while SM omits it; circular conditions block saving and can be located and repaired without closing the draft",
+        "visible row actions reorder content without a generic menu and cancel restores the original order",
+        "inline options, paging, dependent defaults/conditions, directory rules and software/default changes cancel together without persistence",
+        "one Save persists all sections; restart restores defaults and software removals; later candidate rename also updates directory conditions",
+        "incomplete directory rules and duplicate choices block saving; copies do not inherit global/software defaults",
+        "editing and simulating a scheme preserves the real per-file subject, prefix, replacement and temporary numbering; none becomes a reusable default",
+        "both panel settings and candidate editing open the same editor; saved global default composes and writes the expected filename through the owned native save dialog",
+        "a newly adopted starter persists as a global default, survives restart, and saves SM_Rock_v001.txt without any additional main-panel steps"
+      ],
+      "source": "D:\\Code\\Jump\\tests\\output\\unified-scheme\\7b5c1a1795"
+    }
+  },
+  "metrics": {
+    "1_fields": {
+      "row_intervals_dip": [],
+      "direct_row_actions": 5,
+      "expand_to_edit_default": false
+    },
+    "4_fields": {
+      "row_intervals_dip": [
+        68.0,
+        68.0,
+        68.0
+      ],
+      "direct_row_actions": 5,
+      "expand_to_edit_default": false
+    },
+    "8_fields": {
+      "row_intervals_dip": [
+        68.0,
+        68.0,
+        68.0,
+        68.0,
+        90.4,
+        68.0,
+        68.0
+      ],
+      "direct_row_actions": 5,
+      "expand_to_edit_default": false
+    }
+  },
+  "screenshots": {
+    "complex-eight-bottom.png": {
+      "source": "D:\\Code\\Jump\\tests\\output\\scheme-usage-scenarios\\76bb20a91d\\complex-eight-bottom.png",
+      "sha256": "2B0CB41CD7DEBB37BB8166F5947020E92F87E89F7ED04BC3AA1DCC93508D01F1"
+    },
+    "complex-eight-top.png": {
+      "source": "D:\\Code\\Jump\\tests\\output\\scheme-usage-scenarios\\76bb20a91d\\complex-eight-top.png",
+      "sha256": "7E290FC00E6DE445D2E81582E99F0EDA3920931354D1DCA985A44DEDCC9D9164"
+    },
+    "complex-invalid-rule.png": {
+      "source": "D:\\Code\\Jump\\tests\\output\\scheme-usage-scenarios\\76bb20a91d\\complex-invalid-rule.png",
+      "sha256": "7BA319FFCC8FCC339FA4ED7EC2418B7827BAB4DF57C083FD46259C0822CFF567"
+    },
+    "complex-routes-disabled.png": {
+      "source": "D:\\Code\\Jump\\tests\\output\\scheme-usage-scenarios\\76bb20a91d\\complex-routes-disabled.png",
+      "sha256": "915A75F1160ADED2AB1BE6967A39D7E9909CC87C4CEB8D633DF1E30201D48E01"
+    },
+    "simple-empty-original.png": {
+      "source": "D:\\Code\\Jump\\tests\\output\\scheme-usage-scenarios\\76bb20a91d\\simple-empty-original.png",
+      "sha256": "64E1CB126EC3145814577AAE1EC4E782C0DB2B303B6E1B458103FAF4389DFCAD"
+    },
+    "simple-one-part.png": {
+      "source": "D:\\Code\\Jump\\tests\\output\\scheme-usage-scenarios\\76bb20a91d\\simple-one-part.png",
+      "sha256": "E09D8306204664386F32B2DCE90CB199439C8BE8EF4FF7D3A085A2B2B473D96A"
+    },
+    "typical-four-parts.png": {
+      "source": "D:\\Code\\Jump\\tests\\output\\scheme-usage-scenarios\\76bb20a91d\\typical-four-parts.png",
+      "sha256": "D095793DD7DE700B4838FBB958995F66699C9F3085627CCEC00983F28A2E71A9"
+    },
+    "default-scheme.png": {
+      "source": "D:\\Code\\Jump\\tests\\output\\scheme-task-layout\\b0aae65195\\default-scheme.png",
+      "sha256": "55CD16EC47F67FE6C6F299EE76A2667DD96E5EF306E36644835E21B7CE459D4F"
+    },
+    "three-parts.png": {
+      "source": "D:\\Code\\Jump\\tests\\output\\scheme-task-layout\\b0aae65195\\three-parts.png",
+      "sha256": "1CBB7B4A58A332BC036F6903F8F290FB6E04BA37FA7A8FB15FE11F15C81D7B7B"
+    },
+    "eight-parts-dpi-192-bottom.png": {
+      "source": "D:\\Code\\Jump\\tests\\output\\scheme-task-layout\\b0aae65195\\eight-parts-dpi-192-bottom.png",
+      "sha256": "A8D4ACE46455557617DD12A41D60E23F4F9C7C1A7D9687E78F60CE6EECE9B152"
+    },
+    "small-viewport.png": {
+      "source": "D:\\Code\\Jump\\tests\\output\\scheme-task-layout\\b0aae65195\\small-viewport.png",
+      "sha256": "42AA90D044E0E9133048A312D483324019BBB9A08EC7C82FF32704EF8282323D"
+    }
+  },
+  "sources": {
+    "src\\naming_designer.h": "9D3E2EDDA754109798DCF1E744010D919B6BE45D02C9C67C414B92354E8FE0A8",
+    "src\\naming_designer_layout.h": "EC2D3528782EF97A9F8E966DD3B8E78C258F4BF934ED2BD4CD2AEC735E964A83",
+    "tests\\scheme_usage_scenarios_integration.py": "713706CA913F67AF280DA0AE2600F3D6A0153E67CF779EFBA0AA1C735E1CEF50",
+    "tests\\scheme_tasks_layout_integration.py": "7CB18C5C1A482023807B7567AD94A66EC498CF5AF84BDAFF5E92C22B1EAA1599",
+    "tests\\run_checks.py": "DA07B0B8F3E2E57F161CAE617841E16B885259C25986B7AD5A80743630EA47FB",
+    "README.md": "7D781BF36D8A4236BFF9C4000961668D1D3CCF5843DAFF099D84505A9F95AD3C"
+  },
+  "executable_sha256": "04EABB595F6947B0BC9AB8DFEDABC5B5BF15BB9A49DF4CFC94BE05F3FBFEDCFD",
+  "development_settings_sha256": "5E7E7534B9657163180DB383252922B6BFF1C91D45968D683EDD884B3B7035C4",
+  "development_settings_matches_before_changes": true,
+  "limitations": "Owned automated scenarios and screenshot inspection; not novice user observation. DPI changes use native messages, not physical monitor dragging."
+}

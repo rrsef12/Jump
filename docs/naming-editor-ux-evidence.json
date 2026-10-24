@@ -1,0 +1,461 @@
+{
+  "createdUtc": "2026-10-20T13:56:01.205011+00:00",
+  "workspace": "D:\\Code\\Jump",
+  "purpose": "Current implementation review; documentation, screenshots and test evidence only.",
+  "build": [
+    {
+      "path": "build/Jump.exe",
+      "sha256": "bbee9e461dc98ed21a0d12988ae355b90d644df75ce55832d4cacdaf6474c490",
+      "modifiedUtc": "2026-10-20T13:53:26.276704+00:00"
+    },
+    {
+      "path": "build/Jump.TestHost.exe",
+      "sha256": "36633396e443d050fec94eb02eaaf4cad71e214e56c540789c65fc4282e8d14b",
+      "modifiedUtc": "2026-10-20T13:53:27.614772+00:00"
+    }
+  ],
+  "sourceSnapshotHashes": [
+    {
+      "path": "src/app_state.h",
+      "sha256": "e99f5d87afca4b7df596e448915a270bdd2004289779b22f167213ab111224b3",
+      "modifiedUtc": "2026-10-20T06:44:16.978192+00:00"
+    },
+    {
+      "path": "src/blender_bridge.h",
+      "sha256": "37127a0b0fac6b7b2ce1ec9f8329e8068805ef3b50549509b7953bd3cd0bb695",
+      "modifiedUtc": "2026-10-17T13:28:22.217218+00:00"
+    },
+    {
+      "path": "src/config_writer.h",
+      "sha256": "db9707cbab7435506704e7b9b16d14ab0c20d395114fefc34c896bcc46c94cf7",
+      "modifiedUtc": "2026-10-19T17:07:20.816702+00:00"
+    },
+    {
+      "path": "src/experience_ui.h",
+      "sha256": "f4fd6b3e6e9ad3b3044cd1e202663666729df5301b7785ecc967c66b9e442bca",
+      "modifiedUtc": "2026-10-20T06:58:57.327430+00:00"
+    },
+    {
+      "path": "src/filename_controls.h",
+      "sha256": "9e1e6c99a9f53c07c8063cc2f486b710de1a3f44e5163020b41f9e12e395f81e",
+      "modifiedUtc": "2026-10-17T12:58:19.234116+00:00"
+    },
+    {
+      "path": "src/form_dialog.h",
+      "sha256": "27f8e8bf7b5430f7b5751bd897c404adf93b940b7cbaceb51d4e3cec3b4c08a1",
+      "modifiedUtc": "2026-10-20T06:25:37.329626+00:00"
+    },
+    {
+      "path": "src/generic_dialog.h",
+      "sha256": "34fa81935e9427870f8c41d51fb99a9e12454cc04b83e7731fc2f84b0172c9fa",
+      "modifiedUtc": "2026-10-17T13:11:28.724724+00:00"
+    },
+    {
+      "path": "src/jump.ico",
+      "sha256": "724133703f66f14b59234c85487236ca77b2ac95cd38020199135441dddb174c",
+      "modifiedUtc": "2026-10-16T03:19:00.986475+00:00"
+    },
+    {
+      "path": "src/jump.manifest",
+      "sha256": "9b9c435c55c60cc720fcbc899cf1be081576ea73b60207f1dab26b0b66b81d85",
+      "modifiedUtc": "2026-10-18T13:44:12.220578+00:00"
+    },
+    {
+      "path": "src/jump.rc",
+      "sha256": "50749c628a134a879c727b866aa60d70a27a29d1158f8a9786cf103066bc9d25",
+      "modifiedUtc": "2026-10-14T11:48:55.971293+00:00"
+    },
+    {
+      "path": "src/jump.svg",
+      "sha256": "d2bb1e07bdcd810ad00a6d2cb4f6698ca367567900660624d142de16515509d2",
+      "modifiedUtc": "2026-10-16T03:17:19.470627+00:00"
+    },
+    {
+      "path": "src/main.cpp",
+      "sha256": "254919d443f5e2b8c9f61709b0eba6f7085424dcccd1795d20939ad52df54aa8",
+      "modifiedUtc": "2026-10-20T13:43:23.978120+00:00"
+    },
+    {
+      "path": "src/model.cpp",
+      "sha256": "0ba8229e3bb1d25ad75c8b9e0dc325a0f36918a2ebfa9fe3946d57d484e6c4f3",
+      "modifiedUtc": "2026-10-19T17:27:03.424793+00:00"
+    },
+    {
+      "path": "src/model.h",
+      "sha256": "7c99d04b97afba489faeda95df695d7cc9d8b3d48d07259c45028410dd14fd07",
+      "modifiedUtc": "2026-10-20T07:41:36.452434+00:00"
+    },
+    {
+      "path": "src/naming_choices.h",
+      "sha256": "2ad5ac76c560537f85a5cb16aa3f4cf5130925813cb2af2aeff79ddc1e7f6b15",
+      "modifiedUtc": "2026-10-20T09:44:15.888871+00:00"
+    },
+    {
+      "path": "src/naming_defaults_ui.h",
+      "sha256": "1810a8a4025f202f9364d8f4b88fe49d1754b4007e61cf66414d78233cca102e",
+      "modifiedUtc": "2026-10-19T17:28:56.207161+00:00"
+    },
+    {
+      "path": "src/naming_designer.h",
+      "sha256": "c493ba020232efc7a612f0abfbc40dec5e61980adbec7735ea4d26862fdf3d85",
+      "modifiedUtc": "2026-10-20T13:53:10.090651+00:00"
+    },
+    {
+      "path": "src/naming_designer_layout.h",
+      "sha256": "78e131eb9a28e396886aa0e2257b37d12d446ad41b45005124c286cd42c5a073",
+      "modifiedUtc": "2026-10-20T13:36:53.436792+00:00"
+    },
+    {
+      "path": "src/naming_designer_preview.h",
+      "sha256": "51c1f1e2f2f0f9a10af28306a1b36a044efb09208e5d5e8418851c8cdd5111f1",
+      "modifiedUtc": "2026-10-20T13:43:23.979120+00:00"
+    },
+    {
+      "path": "src/naming_feedback.h",
+      "sha256": "ddf62216e1b2e4c38778bee5cc68cf40a889dc111b87d26ad259346ac9536954",
+      "modifiedUtc": "2026-10-19T14:35:17.431860+00:00"
+    },
+    {
+      "path": "src/naming_session.h",
+      "sha256": "743940e5facf8bcc625a6fc7c5ea1e5c644623ba88f7a086cf73bfde50939c72",
+      "modifiedUtc": "2026-10-19T14:09:40.365469+00:00"
+    },
+    {
+      "path": "src/naming_tools.h",
+      "sha256": "8d495bad85d7389b4a117563809d82da2bfffbd5c451855d2d148c80f5991d15",
+      "modifiedUtc": "2026-10-20T09:56:59.331358+00:00"
+    },
+    {
+      "path": "src/naming_worker.h",
+      "sha256": "ec0e277ff5a2d3ddd88715ed163b2cc3e3c65ca27345d658cdc7491c000ffa5d",
+      "modifiedUtc": "2026-10-17T08:42:29.567802+00:00"
+    },
+    {
+      "path": "src/panel_appearance.h",
+      "sha256": "777178ee45e3369a17d5a26858355fe77fb70706b4d94ea7f43f6a5af3c9573f",
+      "modifiedUtc": "2026-10-19T12:59:22.552840+00:00"
+    },
+    {
+      "path": "src/panel_material.h",
+      "sha256": "80d7743e08ee86a6c7eee895d381bcaac7a4206e18f7e9b0b98a84c2bc66d1c4",
+      "modifiedUtc": "2026-10-18T13:44:12.218538+00:00"
+    },
+    {
+      "path": "src/paste_target.h",
+      "sha256": "40f78e00334b09890d2368c8ad6f23ff9b06cde28bf5d271175776c12ac8d250",
+      "modifiedUtc": "2026-10-17T15:12:30.918332+00:00"
+    },
+    {
+      "path": "src/paste_target_ui.h",
+      "sha256": "ce1e08fc73efbb6f15f6cf61ae2bcefbcaebe9494a1bc5400b121d55829cf828",
+      "modifiedUtc": "2026-10-18T17:00:02.803382+00:00"
+    },
+    {
+      "path": "src/popup_menu.h",
+      "sha256": "b451e3e7508e6eae83c0693795ad8a93f88ba03d08c41752a36f3a6220a8052b",
+      "modifiedUtc": "2026-10-20T06:28:42.737381+00:00"
+    },
+    {
+      "path": "src/save_assist_ui.h",
+      "sha256": "714e31b48503b21a8f6105ded28c45d424b4bae07647157de988367aa34acf18",
+      "modifiedUtc": "2026-10-20T07:41:36.452434+00:00"
+    },
+    {
+      "path": "src/save_bridge.h",
+      "sha256": "eb1931a5bed5499f96096303b1c2e6bab0ea0c37e12a62f228ab531267651f1b",
+      "modifiedUtc": "2026-10-17T13:35:40.672253+00:00"
+    },
+    {
+      "path": "src/save_notice.h",
+      "sha256": "9e11572aa23335fe90f3df1255ade0e2e094dbb85aa928a894b0197d43b4d170",
+      "modifiedUtc": "2026-10-17T15:15:18.485961+00:00"
+    },
+    {
+      "path": "src/save_session_types.h",
+      "sha256": "e81c3680eb38974b51b27d275a620774012489346b5e4fe9616c975ea36276f7",
+      "modifiedUtc": "2026-10-18T11:17:43.013950+00:00"
+    },
+    {
+      "path": "src/save_target.h",
+      "sha256": "6c3cd53a37eddeb1d5ebfbf8e6c23da5d5d79d03d3920d62b97a6dec968be4c8",
+      "modifiedUtc": "2026-10-20T06:44:16.978192+00:00"
+    },
+    {
+      "path": "src/save_verification.h",
+      "sha256": "0c74da892e500b3e5e00342257435fa95442d574085d444fadce16a082f7ae30",
+      "modifiedUtc": "2026-10-18T05:00:36.455141+00:00"
+    },
+    {
+      "path": "src/settings_center.h",
+      "sha256": "199d944e0dd262dbd9933b11e2cedaccb1d867dec640f7d90b301f993fdfdaab",
+      "modifiedUtc": "2026-10-20T13:43:23.975116+00:00"
+    },
+    {
+      "path": "src/settings_draft.h",
+      "sha256": "7416c3bda2204cf37ef4f8a7c3f8cd27a7188d388676ddcdd1f69712782cc99e",
+      "modifiedUtc": "2026-10-19T07:10:50.572908+00:00"
+    },
+    {
+      "path": "src/settings_host.h",
+      "sha256": "a3c0bfb5bc01346e4490be5631a7df2c8b1850654164ea7a0676dc48d27b8b4d",
+      "modifiedUtc": "2026-10-20T13:40:26.730468+00:00"
+    },
+    {
+      "path": "src/settings_pages.h",
+      "sha256": "8a669c3b699b4b8337f15a635e614a7793115479301983b391ab3daa28ea2f7e",
+      "modifiedUtc": "2026-10-19T06:24:09.507299+00:00"
+    },
+    {
+      "path": "src/structured_controls.h",
+      "sha256": "c90f25e9155e18ebaa1fc934fb7d681fd0b60a193799e5c04a70b678d51a6426",
+      "modifiedUtc": "2026-10-20T09:47:54.294141+00:00"
+    },
+    {
+      "path": "src/structured_naming.h",
+      "sha256": "5251b66f8cfbc9a9c468cb0cf9158c0a1fda4ea27cc28183a2eb27957666f775",
+      "modifiedUtc": "2026-10-20T07:52:16.701451+00:00"
+    },
+    {
+      "path": "src/structured_ui.h",
+      "sha256": "4ca9948d265c15aa4ea5d5d508c785b6eb99f029f419628c07e6aead0b4a101a",
+      "modifiedUtc": "2026-10-20T09:51:02.313003+00:00"
+    },
+    {
+      "path": "src/subject_group.h",
+      "sha256": "20bc78871fc27dcc759bd89bca176f3b6eaecbb5f3db62e36ef58db0abab45ce",
+      "modifiedUtc": "2026-10-19T14:12:29.319955+00:00"
+    },
+    {
+      "path": "src/test_host.cpp",
+      "sha256": "d6f74aaafce01dbc9d29b98a68eda24c2f30e437950dcc7730172d001185b987",
+      "modifiedUtc": "2026-10-18T05:01:58.843015+00:00"
+    },
+    {
+      "path": "src/transient_edit.h",
+      "sha256": "362206455c75e47f4937fb0fbcf482d76e42d6ce4fdb77fda53cf0d708bcb082",
+      "modifiedUtc": "2026-10-19T14:16:28.880142+00:00"
+    },
+    {
+      "path": "src/ui_types.h",
+      "sha256": "9329abc4db4a7b133a7941a6eb4e313be6462869d7e43c6ddeaac6f639acf56c",
+      "modifiedUtc": "2026-10-18T17:14:03.623260+00:00"
+    },
+    {
+      "path": "src/workflow_checks.h",
+      "sha256": "2c055edface729dd8aea096e0df1a69d8ea1248b3765f50cb0fb0ccc43117f9a",
+      "modifiedUtc": "2026-10-20T07:52:16.702455+00:00"
+    },
+    {
+      "path": "src/workflow_ui.h",
+      "sha256": "cf7f320d0e70ee63f5cf8b5380d3e77a764d61289acb3309c5d492f6c685d7f7",
+      "modifiedUtc": "2026-10-19T17:07:20.819677+00:00"
+    },
+    {
+      "path": "src/workspace.cpp",
+      "sha256": "9520ba646ec4eff6b47a147f84077d266dd2f9e3e6e4be0b582448df8189a91d",
+      "modifiedUtc": "2026-10-17T08:30:56.367400+00:00"
+    }
+  ],
+  "verificationScriptHashes": [
+    {
+      "path": "build.ps1",
+      "sha256": "cebfc693a271bd8ca46a4a2b5b1d5f95143a81c889d06f5dd9b8a95c33589378",
+      "modifiedUtc": "2026-10-17T08:30:56.788325+00:00"
+    },
+    {
+      "path": "dev.ps1",
+      "sha256": "a3dc846a65a8383fa6e4f7f25ce692720ad27aed8877e01a14c9f709fcd5cf4d",
+      "modifiedUtc": "2026-10-18T17:12:01.037470+00:00"
+    },
+    {
+      "path": "tests/unified_scheme_integration.py",
+      "sha256": "4cb1563d7ddb78b1421a059d33aec7514b3918d4831a724c6468e1310895c839",
+      "modifiedUtc": "2026-10-20T13:49:51.801505+00:00"
+    },
+    {
+      "path": "tests/settings_center_integration.py",
+      "sha256": "a6122ceab69f0bd365881703dd7688447cc8cd8ad76050620fad2f0a0cc09232",
+      "modifiedUtc": "2026-10-20T13:30:06.499174+00:00"
+    },
+    {
+      "path": "tests/scheme_tasks_layout_integration.py",
+      "sha256": "169178ba8400402579d7a1631841f98d319517120e21bd17d391298a6e3b0830",
+      "modifiedUtc": "2026-10-20T13:45:17.983477+00:00"
+    },
+    {
+      "path": "tests/default_schemes_integration.py",
+      "sha256": "33f29f8e3f827de2c0498e13a5d7b56443d3e1d12ce844a71e0a8f4053b35696",
+      "modifiedUtc": "2026-10-20T13:37:24.452760+00:00"
+    },
+    {
+      "path": "tests/layout_smoke.py",
+      "sha256": "4d88b3a586e5add195acd7a9423607fae6e32b93a642469197c77b2ee1159915",
+      "modifiedUtc": "2026-10-19T06:30:11.206181+00:00"
+    },
+    {
+      "path": "tests/run_checks.py",
+      "sha256": "6c2507e40241589eb733aba3f36a9ce3a66cee668c53260e504d25b246c423df",
+      "modifiedUtc": "2026-10-20T13:45:17.983477+00:00"
+    }
+  ],
+  "persistentDevConfig": {
+    "path": "build/dev/settings.ini",
+    "sha256": "9298186a918885bce9b49cd7206b8bbf36f7b8f837da33efc327e359cb9fa769",
+    "modifiedUtc": "2026-10-20T09:40:57.230568+00:00",
+    "unchangedFromRecordedBaseline": true,
+    "contentsIncluded": false
+  },
+  "reports": [
+    {
+      "source": {
+        "path": "tests/output/unified-scheme/4421e51bd7/report.json",
+        "sha256": "ad7b34f83b6a4fedd505c4ebb0d8161bb1d5c60e23b7b112346ff068e3d813b4",
+        "modifiedUtc": "2026-10-20T13:54:05.735752+00:00"
+      },
+      "delivered": {
+        "path": "docs/evidence/naming-editor-ux-2026-10-20/unified-scheme.json",
+        "sha256": "ad7b34f83b6a4fedd505c4ebb0d8161bb1d5c60e23b7b112346ff068e3d813b4",
+        "modifiedUtc": "2026-10-20T13:54:05.735752+00:00"
+      },
+      "passedScenarioGroups": 14,
+      "afterFinalTextPositionFix": true
+    },
+    {
+      "source": {
+        "path": "tests/output/settings-center/8e0a7e19c7/report.json",
+        "sha256": "0655dfeb6b432bddb87eafc223abfb78ff795052c273851dc42241523b1b17f7",
+        "modifiedUtc": "2026-10-20T13:54:08.976850+00:00"
+      },
+      "delivered": {
+        "path": "docs/evidence/naming-editor-ux-2026-10-20/settings-center.json",
+        "sha256": "0655dfeb6b432bddb87eafc223abfb78ff795052c273851dc42241523b1b17f7",
+        "modifiedUtc": "2026-10-20T13:54:08.976850+00:00"
+      },
+      "passedScenarioGroups": 8,
+      "afterFinalTextPositionFix": true
+    },
+    {
+      "source": {
+        "path": "tests/output/scheme-task-layout/b80088a3f2/report.json",
+        "sha256": "b85e9bade1066321c02896170d741b59678982e5a663bcf4e01b5f03b7898a4f",
+        "modifiedUtc": "2026-10-20T13:47:15.279930+00:00"
+      },
+      "delivered": {
+        "path": "docs/evidence/naming-editor-ux-2026-10-20/scheme-task-layout.json",
+        "sha256": "b85e9bade1066321c02896170d741b59678982e5a663bcf4e01b5f03b7898a4f",
+        "modifiedUtc": "2026-10-20T13:47:15.279930+00:00"
+      },
+      "passedScenarioGroups": 3,
+      "afterFinalTextPositionFix": false
+    },
+    {
+      "source": {
+        "path": "tests/output/default-schemes/f8b28b8585/report.json",
+        "sha256": "f7c795e1e7677adb17e6c1e4e1df35c435e3ef7cc31618015501bd8c6f7d8dc3",
+        "modifiedUtc": "2026-10-20T13:47:32.375471+00:00"
+      },
+      "delivered": {
+        "path": "docs/evidence/naming-editor-ux-2026-10-20/default-schemes.json",
+        "sha256": "f7c795e1e7677adb17e6c1e4e1df35c435e3ef7cc31618015501bd8c6f7d8dc3",
+        "modifiedUtc": "2026-10-20T13:47:32.375471+00:00"
+      },
+      "passedScenarioGroups": 3,
+      "afterFinalTextPositionFix": false
+    },
+    {
+      "source": {
+        "path": "tests/output/layout/683d845cac/report.json",
+        "sha256": "1a63d6a24058a78904f7c72fd94a4333580208650826e4e81a5c6a11cf1c65c7",
+        "modifiedUtc": "2026-10-20T13:48:35.244598+00:00"
+      },
+      "delivered": {
+        "path": "docs/evidence/naming-editor-ux-2026-10-20/layout-smoke.json",
+        "sha256": "1a63d6a24058a78904f7c72fd94a4333580208650826e4e81a5c6a11cf1c65c7",
+        "modifiedUtc": "2026-10-20T13:48:35.244598+00:00"
+      },
+      "passedScenarioGroups": 8,
+      "afterFinalTextPositionFix": false
+    }
+  ],
+  "screenshots": [
+    {
+      "source": {
+        "path": "tests/output/unified-scheme/4421e51bd7/default-page.png",
+        "sha256": "36f0458a11fb4d266097ebaaf8d16ad535340d6aab6c4d419fa66d72757ec853",
+        "modifiedUtc": "2026-10-20T13:53:46.587603+00:00"
+      },
+      "delivered": {
+        "path": "docs/assets/naming-editor-ux-2026-10-20/default-page.png",
+        "sha256": "36f0458a11fb4d266097ebaaf8d16ad535340d6aab6c4d419fa66d72757ec853",
+        "modifiedUtc": "2026-10-20T13:53:46.587603+00:00"
+      }
+    },
+    {
+      "source": {
+        "path": "tests/output/unified-scheme/4421e51bd7/part-details.png",
+        "sha256": "c776e5b760627d7b0d044f9e65ed90cf7c4398689d18f386277ecba3a8cce09e",
+        "modifiedUtc": "2026-10-20T13:53:46.723156+00:00"
+      },
+      "delivered": {
+        "path": "docs/assets/naming-editor-ux-2026-10-20/part-details.png",
+        "sha256": "c776e5b760627d7b0d044f9e65ed90cf7c4398689d18f386277ecba3a8cce09e",
+        "modifiedUtc": "2026-10-20T13:53:46.723156+00:00"
+      }
+    },
+    {
+      "source": {
+        "path": "tests/output/unified-scheme/4421e51bd7/starter-simulation.png",
+        "sha256": "de67450530db1fa55a85ca3b94a21c4684786f523b792292078c5accb84183ee",
+        "modifiedUtc": "2026-10-20T13:53:46.430984+00:00"
+      },
+      "delivered": {
+        "path": "docs/assets/naming-editor-ux-2026-10-20/starter-simulation.png",
+        "sha256": "de67450530db1fa55a85ca3b94a21c4684786f523b792292078c5accb84183ee",
+        "modifiedUtc": "2026-10-20T13:53:46.430984+00:00"
+      }
+    },
+    {
+      "source": {
+        "path": "tests/output/unified-scheme/4421e51bd7/usage-scope.png",
+        "sha256": "57ed72b1e0078d8f2ad0c42d3dbfe9d467db2990343e7be6df2aaf1a01bfe369",
+        "modifiedUtc": "2026-10-20T13:53:46.848053+00:00"
+      },
+      "delivered": {
+        "path": "docs/assets/naming-editor-ux-2026-10-20/usage-scope.png",
+        "sha256": "57ed72b1e0078d8f2ad0c42d3dbfe9d467db2990343e7be6df2aaf1a01bfe369",
+        "modifiedUtc": "2026-10-20T13:53:46.848053+00:00"
+      }
+    },
+    {
+      "source": {
+        "path": "tests/output/unified-scheme/4421e51bd7/rule-error.png",
+        "sha256": "b0347957eb6d76a0804055f1e3f1e0c3dfb62b83e37619c9f190cb1e54474f7c",
+        "modifiedUtc": "2026-10-20T13:53:51.489103+00:00"
+      },
+      "delivered": {
+        "path": "docs/assets/naming-editor-ux-2026-10-20/rule-error.png",
+        "sha256": "b0347957eb6d76a0804055f1e3f1e0c3dfb62b83e37619c9f190cb1e54474f7c",
+        "modifiedUtc": "2026-10-20T13:53:51.489103+00:00"
+      }
+    },
+    {
+      "source": {
+        "path": "tests/output/unified-scheme/4421e51bd7/template-preview.png",
+        "sha256": "10466ee3b42611c31bc05ea9fc6a46ec2d89fac1c0d0d6895f85f677f8621248",
+        "modifiedUtc": "2026-10-20T13:53:46.027822+00:00"
+      },
+      "delivered": {
+        "path": "docs/assets/naming-editor-ux-2026-10-20/template-preview.png",
+        "sha256": "10466ee3b42611c31bc05ea9fc6a46ec2d89fac1c0d0d6895f85f677f8621248",
+        "modifiedUtc": "2026-10-20T13:53:46.027822+00:00"
+      }
+    }
+  ],
+  "limits": [
+    "No novice usability study has been performed.",
+    "Physical multi-monitor DPI dragging has not been verified.",
+    "The three earlier reports precede only the final 16 logical-pixel help-label adjustment.",
+    "Scenario counts count report groups rather than individual assertions.",
+    "Source hashes identify the final snapshot, not a claim that earlier reports ran on byte-identical sources."
+  ]
+}

@@ -1,0 +1,18 @@
+#include <windows.h>
+#pragma code_page(65001)
+101 ICON "jump.ico"
+1 RT_MANIFEST "src/jump.manifest"
+1 VERSIONINFO
+ FILEVERSION 0,1,0,0
+ PRODUCTVERSION 0,1,0,0
+ FILEOS VOS_NT_WINDOWS32
+ FILETYPE VFT_APP
+BEGIN
+ BLOCK "StringFileInfo" BEGIN BLOCK "080404b0" BEGIN
+  VALUE "CompanyName", "Jump\0"
+  VALUE "FileDescription", "Jump 保存助手\0"
+  VALUE "ProductName", "Jump\0"
+  VALUE "ProductVersion", "0.1.0\0"
+ END END
+ BLOCK "VarFileInfo" BEGIN VALUE "Translation", 0x0804, 1200 END
+END

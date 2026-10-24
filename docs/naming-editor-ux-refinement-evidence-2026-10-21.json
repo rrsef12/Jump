@@ -1,0 +1,113 @@
+{
+  "date": "2026-10-21",
+  "build": "Debug through dev.ps1; dist untouched",
+  "checks": {
+    "scheme_tasks_layout_integration.py": {
+      "groups": 7,
+      "passed": [
+        "single-part overview exposes eight options and batch preview; empty/custom separators survive navigation; batch results preserve extensions and leave simulation input intact",
+        "compact preview edits original-name simulation on the rules page; three/eight-part layouts keep direct actions aligned and separate from wrapped names and condition summaries",
+        "eight content types coexist, including automatic project/date, editable categories, fixed text and independent manual numbering",
+        "a reduced resizable viewport and 100/150/native-percent DPI change messages preserve both the eight-part draft and isolated simulation input",
+        "long names and abbreviated conditions stay separate at 100/150/200/native-percent DPI; Save/Cancel remain fixed while scrolling, resizing and correcting errors; reverting edits clears dirty state and simulation never marks rules dirty",
+        "correction preserves invalid text and reveals the focused input after shrinking; behavior is distinct from source editing; cancelling all eight parts writes no recipe",
+        "date formats are edited beside date parts, remain shared across automatic date sources and survive source changes; numbering and same-name checks keep their settings through Save and reopen; invalid separators locate the visible overview control"
+      ],
+      "source": "D:\\Code\\Jump\\tests\\output\\scheme-task-layout\\c72066a638"
+    },
+    "unified_scheme_integration.py": {
+      "groups": 15,
+      "passed": [
+        "the fixed footer tracks actual rule and scope edits, clears when edits are reverted, and excludes all simulation input",
+        "the compact overview edits common values, separators and numbering directly; examples retain separate drafts; cancelling preserves the original scheme",
+        "the explicit starter creates category_original_v001; display names map to SM; simulation numbering is labeled; usage scope states precedence and manual entry",
+        "existing output formatting remains editable on demand and survives returning to the overview without rewriting values",
+        "Add contains only fields; custom and fixed content edit in place without another form; removal restores the original composition",
+        "simulation uses the production composer, explains conditional omissions, survives task switches, and never persists as scheme defaults",
+        "invalid advanced rules name the affected part and provide direct correction; choices and conditions have independent task pages",
+        "category T enables texture usage while SM omits it; circular conditions block saving and can be located and repaired without closing the draft",
+        "visible row actions reorder content without a generic menu and cancel restores the original order",
+        "inline options, paging, dependent defaults/conditions, directory rules and software/default changes cancel together without persistence",
+        "one Save persists all sections; restart restores defaults and software removals; later candidate rename also updates directory conditions",
+        "incomplete directory rules and duplicate choices block saving; copies do not inherit global/software defaults",
+        "editing and simulating a scheme preserves the real per-file subject, prefix, replacement and temporary numbering; none becomes a reusable default",
+        "both panel settings and candidate editing open the same editor; saved global default composes and writes the expected filename through the owned native save dialog",
+        "a newly adopted starter persists as a global default, survives restart, and saves SM_Rock_v001.txt without any additional main-panel steps"
+      ],
+      "source": "D:\\Code\\Jump\\tests\\output\\unified-scheme\\ed9dde32d3"
+    },
+    "settings_center_integration.py": {
+      "groups": 8,
+      "passed": [
+        "all nine sections share one settings window; startup DPI and section bounds fit",
+        "options edit directly inside the scheme; section navigation protects the shared draft and confirmed discard writes nothing",
+        "inline favorite drafts survive rejected navigation, row changes and close; unrelated config writes exclude new drafts; duplicate paths are blocked and failed saves retain inputs for retry",
+        "general options and affix categories protect drafts; blocked filesystem writes roll back configuration and can be retried without retyping; successful saves need no modal acknowledgment",
+        "variable token rebuilds preserve the original dirty baseline; saved template clears its draft state",
+        "project forms edit inside the center; cancelled drafts leave configuration intact and saved projects persist",
+        "backup and diagnostics operate in their sections; diagnostic copying opens no extra window",
+        "closing the center protects an active draft; cancelling the editor then closes normally"
+      ],
+      "source": "D:\\Code\\Jump\\tests\\output\\settings-center\\8d1de5afd7"
+    },
+    "default_schemes_integration.py": {
+      "groups": 3,
+      "passed": [
+        "legacy startup choice migrates once; manager sets global and application defaults without altering the live draft; temporary switching preserves both defaults",
+        "panel sets independent defaults for two executable names; restarts apply the correct override or global fallback; clearing one override keeps the other",
+        "existing application assignments can be changed centrally; deleting a custom default removes its references and safely falls back to the asset scheme"
+      ],
+      "source": "D:\\Code\\Jump\\tests\\output\\default-schemes\\9fd64a546d"
+    }
+  },
+  "screenshots": {
+    "default-scheme.png": {
+      "source": "D:\\Code\\Jump\\tests\\output\\scheme-task-layout\\c72066a638\\default-scheme.png",
+      "sha256": "293A7C75F6C5889B26EFA1B61028F34EE68253D959E3EB2410AA6775422BC45A"
+    },
+    "single-part-eight-options.png": {
+      "source": "D:\\Code\\Jump\\tests\\output\\scheme-task-layout\\c72066a638\\single-part-eight-options.png",
+      "sha256": "7BE67C6F5674F06BA2FF36F1DE6B50D280FBE9ACCFC8262F012FEC2D057FEFF0"
+    },
+    "three-parts.png": {
+      "source": "D:\\Code\\Jump\\tests\\output\\scheme-task-layout\\c72066a638\\three-parts.png",
+      "sha256": "85C619531F3D402E061A6C16281663E99A335A0B856B323537AED9F5768CC14F"
+    },
+    "eight-parts-top.png": {
+      "source": "D:\\Code\\Jump\\tests\\output\\scheme-task-layout\\c72066a638\\eight-parts-top.png",
+      "sha256": "DC722656C09582EC4A8F2A1D450ECFBF199656ED4DA61B92C85C046A05656112"
+    },
+    "eight-parts-bottom.png": {
+      "source": "D:\\Code\\Jump\\tests\\output\\scheme-task-layout\\c72066a638\\eight-parts-bottom.png",
+      "sha256": "9F1138F87E546A6D6D36D418A80554DF8D57ADE6F2A8C855BEDEDF2B65E3E026"
+    },
+    "date-part-settings.png": {
+      "source": "D:\\Code\\Jump\\tests\\output\\scheme-task-layout\\c72066a638\\date-part-settings.png",
+      "sha256": "953B649F4D08AF2F3B55B7D9537407EC6D640D2CC2835FB106D5FFDF9848D95C"
+    },
+    "numbering-settings.png": {
+      "source": "D:\\Code\\Jump\\tests\\output\\scheme-task-layout\\c72066a638\\numbering-settings.png",
+      "sha256": "7BE296F5BE51BB2C7AB3F7BC39F789A422F4947B8B8B1836D9531D50C1E29754"
+    },
+    "small-viewport.png": {
+      "source": "D:\\Code\\Jump\\tests\\output\\scheme-task-layout\\c72066a638\\small-viewport.png",
+      "sha256": "43A09DEB15607C520689F956A88B63738B32608C3935915F0C4854ACC4F1BD57"
+    },
+    "eight-parts-200-bottom.png": {
+      "source": "D:\\Code\\Jump\\tests\\output\\scheme-task-layout\\c72066a638\\eight-parts-dpi-192-bottom.png",
+      "sha256": "24E1B233EA0EF9301F25756F96D427978DB45E87FE3D1624192F45FF346B649C"
+    }
+  },
+  "sources": {
+    "src\\naming_designer.h": "66B342BEBE1C45726ED2C56066A92720E6E3684A7D76880BDB3026A1C42FCE14",
+    "src\\naming_designer_layout.h": "1BD4E99FF995725D297D40EA290225D40BDE55538B542A7542A2BFC0A5D15A73",
+    "src\\naming_designer_preview.h": "614E21D21DC99E4E38503C17AE9B80A19DBCD6BCCBF983E7B9D952FF3F25C8C7",
+    "tests\\scheme_tasks_layout_integration.py": "C214325CAD851A9954F4985A52D83B058D716ACF7C92BD9C9AA05A205EAD1AFD",
+    "tests\\unified_scheme_integration.py": "4BF9E6D9258B7DCB09D55E1F0844052715B164ACDAA2AFD95CEC6660C1FCA92C",
+    "README.md": "6F94366D05400657ECFCD4CAE12CA3D88B4B171D1A60D04C913CF13ECB52D52C"
+  },
+  "executable_sha256": "20A003531586A835BB87190D6CEA43BC49DEAB5532983C7F85089DBAB7D0B587",
+  "development_settings_sha256": "5E7E7534B9657163180DB383252922B6BFF1C91D45968D683EDD884B3B7035C4",
+  "development_settings_matches_before_changes": true,
+  "dpi_method": "Native window WM_DPICHANGED at 96, 144, 192 and native DPI. Physical monitor dragging not tested."
+}

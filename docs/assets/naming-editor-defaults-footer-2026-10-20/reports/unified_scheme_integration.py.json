@@ -1,0 +1,20 @@
+{
+  "passed": [
+    "the fixed footer tracks actual rule and scope edits, clears when edits are reverted, and excludes all simulation input",
+    "the compact overview edits common values, separators and numbering directly; examples retain separate drafts; cancelling preserves the original scheme",
+    "the explicit starter creates category_original_v001; display names map to SM; simulation numbering is labeled; usage scope states precedence and manual entry",
+    "existing output formatting remains editable on demand and survives returning to the overview without rewriting values",
+    "Add contains only fields; custom and fixed content edit in place without another form; removal restores the original composition",
+    "simulation uses the production composer, explains conditional omissions, survives task switches, and never persists as scheme defaults",
+    "invalid advanced rules name the affected part and provide direct correction; choices and conditions have independent task pages",
+    "category T enables texture usage while SM omits it; circular conditions block saving and can be located and repaired without closing the draft",
+    "visible row actions reorder content without a generic menu and cancel restores the original order",
+    "inline options, paging, dependent defaults/conditions, directory rules and software/default changes cancel together without persistence",
+    "one Save persists all sections; restart restores defaults and software removals; later candidate rename also updates directory conditions",
+    "incomplete directory rules and duplicate choices block saving; copies do not inherit global/software defaults",
+    "editing and simulating a scheme preserves the real per-file subject, prefix, replacement and temporary numbering; none becomes a reusable default",
+    "both panel settings and candidate editing open the same editor; saved global default composes and writes the expected filename through the owned native save dialog",
+    "a newly adopted starter persists as a global default, survives restart, and saves SM_Rock_v001.txt without any additional main-panel steps"
+  ],
+  "output": "D:\\Code\\Jump\\tests\\output\\unified-scheme\\7baaad5ef6"
+}

@@ -1,0 +1,39 @@
+{
+  "passed": [
+    "one part: Rock and empty original follow the actual source without Asset fallback; choices remain one action away; impossible reorder/delete are disabled; preview, cancelled menu and Cancel leave configuration untouched",
+    "four configured fields: SM_Rock_WIP_v001 with an empty optional detail; default/option mapping, live numbering, simulation isolation and revert all work; the scheme menu copies the full draft without software/global defaults and Cancel discards it",
+    "eight fields: long custom names, conditional omission/inclusion, local LOD/revision formatting, direct row actions and fixed footer remain readable; invalid rules can be repaired without losing input; route states reflect effective configuration and toggles retain all three rules"
+  ],
+  "metrics": {
+    "1_fields": {
+      "row_intervals_dip": [],
+      "direct_row_actions": 5,
+      "expand_to_edit_default": false
+    },
+    "4_fields": {
+      "row_intervals_dip": [
+        68.0,
+        68.0,
+        68.0
+      ],
+      "direct_row_actions": 5,
+      "expand_to_edit_default": false
+    },
+    "8_fields": {
+      "row_intervals_dip": [
+        68.0,
+        68.0,
+        68.0,
+        68.0,
+        90.4,
+        68.0,
+        68.0
+      ],
+      "direct_row_actions": 5,
+      "expand_to_edit_default": false
+    }
+  },
+  "output": "D:\\Code\\Jump\\tests\\output\\scheme-usage-scenarios\\76bb20a91d",
+  "development_config_sha256": "5e7e7534b9657163180db383252922b6bff1c91d45968d683edd884b3b7035c4",
+  "limitations": "Automated owned fixtures and screenshot inspection; not a novice user study. Existing layout integration covers DPI transitions."
+}
