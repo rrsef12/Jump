@@ -82,7 +82,7 @@ void updateNamingFeedback() {
                              : fieldValue(g->structure.fields[i], g->cfg, g->structure.dateFormat);
             error = namingFieldError(g->structure.fields[i], value);
             if (editing && g->structuredEdited && value.size() > 120)
-                error = L"字段内容过长";
+                error = L"内容过长";
             if (!error.empty() && editing && g->structuredEdited)
                 error += L"；Esc 撤回本次输入。";
         }

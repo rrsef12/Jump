@@ -352,7 +352,7 @@ void updateStructuredContent() {
     auto full = g->stemName + g->dialog.extension;
     tip(GetDlgItem(g->panel, ID_PREVIEW),
         full + L"\n右键复制完整文件名。" +
-            (quickNamingView() ? L"\n点选字段即可修改；整名编辑、规则和编号均在“命名设置”中。" : L""));
+            (quickNamingView() ? L"\n点选命名部分即可修改；整名编辑、规则和编号均在“命名设置”中。" : L""));
     // Resize the result and footer in place, preserving active editors and IME.
     int previewHeight = structuredPreviewHeight(full, g->width - 2 * PANEL_MARGIN);
     if (g->structuredFullHeight != previewHeight) {
@@ -398,7 +398,7 @@ void updateStructuredContent() {
         rules += (rules.empty() ? L"" : L" · ") + std::wstring(L"替换已启用");
     auto settings = GetDlgItem(g->panel, ID_STRUCT_SCHEMES);
     setTextIfChanged(settings, rules.empty() ? L"命名设置 ▾" : L"命名设置 • ▾");
-    tip(settings, L"切换方案、编辑字段、修饰规则、末尾编号和撤销还原。\n当前方案：" + g->structure.name +
+    tip(settings, L"切换方案、编辑命名部分、修饰规则、末尾编号和撤销还原。\n当前方案：" + g->structure.name +
                       L"\n末尾编号：" +
                       (g->numberMode == 1   ? std::wstring(L"自动版本")
                        : g->numberMode == 2 ? L"自动序号"
@@ -477,7 +477,7 @@ std::wstring structuredInputError() {
     auto value = trim(g->structuredDraft);
     auto error = namingFieldError(field, value);
     if (!error.empty() || value.size() > 120)
-        return (error.empty() ? L"字段内容过长" : error) + L"；Esc 撤回本次输入。";
+        return (error.empty() ? L"内容过长" : error) + L"；Esc 撤回本次输入。";
     return {};
 }
 void liveStructuredInput() {
@@ -559,7 +559,7 @@ void applyStructuredValue(int index, std::wstring value, bool toggle = false, in
         check.required = false;
     auto error = namingFieldError(check, value);
     if (!error.empty() || value.size() > 120) {
-        g->status = error.empty() ? L"字段内容过长" : error;
+        g->status = error.empty() ? L"内容过长" : error;
         g->statusError = true;
         updatePanelContent();
         return;
@@ -781,7 +781,7 @@ void showNamingSettings(bool direct) {
                 L"命名方案");
     auto current = CreatePopupMenu();
     AppendMenuW(current, MF_STRING | (fieldMode ? 0 : MF_GRAYED) | (g->structuredAdvanced ? MF_CHECKED : 0),
-                g->structuredAdvanced ? ID_STRUCT_QUICK_VIEW : ID_STRUCT_FIELDS_VIEW, L"显示全部字段");
+                g->structuredAdvanced ? ID_STRUCT_QUICK_VIEW : ID_STRUCT_FIELDS_VIEW, L"显示全部命名部分");
     AppendMenuW(current, MF_STRING, ID_STRUCT_FREE,
                 g->structure.free ? L"恢复分项填写" : L"直接修改完整文件名");
     AppendMenuW(current, MF_SEPARATOR, 0, nullptr);
@@ -889,7 +889,7 @@ void structureFromExample() {
     s.fields.clear();
     s.separator = sep;
     s.counter = 0;
-    s.name = L"我的字段方案";
+    s.name = L"我的命名方案";
     std::vector<std::wstring> pieces;
     size_t at = 0;
     while (at <= name.size()) {
@@ -901,14 +901,14 @@ void structureFromExample() {
     }
     if (pieces.size() > 8 ||
         std::any_of(pieces.begin(), pieces.end(), [](const auto &v) { return v.empty(); })) {
-        workflowNotice(L"请使用最多 8 个非空片段；字段内的分隔符可在建立后编辑字段合并。");
+        workflowNotice(L"请使用最多 8 个非空片段；部分内的分隔符可在建立后编辑合并。");
         return;
     }
     std::vector<FormField> fields;
     for (size_t i = 0; i < pieces.size(); ++i)
         fields.push_back({pieces[i] + L" 的含义（版本填“版本”，其余自定义）",
-                          i == 0 ? L"主要名称" : L"字段" + std::to_wstring(i + 1)});
-    auto form = settingsForm(L"确认名称字段", L"仅标记为“版本”的末段 vNNN 会转成自动编号；其他内容保留原样。",
+                          i == 0 ? L"主要名称" : L"命名部分" + std::to_wstring(i + 1)});
+    auto form = settingsForm(L"确认命名部分", L"仅标记为“版本”的末段 vNNN 会转成自动编号；其他内容保留原样。",
                              fields);
     while (showForm(g->panel, form)) {
         s.fields.clear();
@@ -945,7 +945,7 @@ void structureFromExample() {
             s.fields.push_back(std::move(field));
         }
         if (!ok || s.fields.empty()) {
-            workflowNotice(L"请填写不同字段的名称；版本必须是末段 v 后接数字。");
+            workflowNotice(L"请填写不同命名部分的名称；版本必须是末段 v 后接数字。");
             continue;
         }
         GUID guid{};
@@ -1012,7 +1012,7 @@ bool renameStructuredCandidate(HWND control) {
         return true;
     auto schema = g->structure.id, fieldId = g->structure.fields[index].id;
     auto target = g->dialog.hwnd;
-    auto form = workflowForm(L"重命名候选", L"同步更新已选中的文件名",
+    auto form = workflowForm(L"重命名常用选项", L"同步更新已选中的文件名",
                              {{L"名称", candidate.name.empty() ? candidate.value : candidate.name}});
     CompactFormStyle style{g->smallFont, g->inputBrush, g->field,   g->muted,        g->line,
                            g->accent,    g->primary,    g->surface, paintRoundedRect};
@@ -1027,7 +1027,7 @@ bool renameStructuredCandidate(HWND control) {
         auto check = g->structure.fields[index];
         check.required = false;
         if (value.empty() || value.size() > 80 || !namingFieldError(check, value).empty()) {
-            workflowNotice(L"请输入符合字段规则的 1–80 字名称。");
+            workflowNotice(L"请输入符合规则的 1–80 字名称。");
             continue;
         }
         if (value == candidate.value && (candidate.name.empty() || value == candidate.name))
@@ -1036,7 +1036,7 @@ bool renameStructuredCandidate(HWND control) {
         if (std::any_of(choices.begin(), choices.end(), [&](const auto &p) {
                 return p.value != candidate.value && (p.value == value || p.name == value);
             })) {
-            workflowNotice(L"此字段已有同名选项，请换一个名称。");
+            workflowNotice(L"此项已有同名选项，请换一个名称。");
             continue;
         }
         bool managed = builtinNamingScheme(schema) ||
@@ -1483,7 +1483,7 @@ bool structuredCommand(int id, int code) {
         }
         if (!marked)
             next = g->structure;
-        auto description = marked ? L"使用方案中已有的交付选项" : L"沿用当前方案的字段和编号";
+        auto description = marked ? L"使用方案中已有的交付选项" : L"沿用当前方案的命名部分和编号";
         if (MessageBoxW(
                 g->panel,
                 (std::wstring(description) + L"，位置切换到：\n" + path + L"\n\n本操作只填入，不保存。")

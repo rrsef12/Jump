@@ -40,18 +40,20 @@ std::wstring numberingCaption() {
 }
 void buildNamingActions(int &y, int available) {
     const int x = PANEL_MARGIN;
-    auto number = child(L"BUTTON", L"", WS_TABSTOP, ID_NUMBER_MENU, x, y, available - 120, 28);
+    auto number = child(L"BUTTON", L"", WS_TABSTOP, ID_NUMBER_MENU, x, y, available - 142, 28);
     tip(number, L"直接选择自动版本、序号或关闭；菜单可查看计算范围。");
-    auto undo = child(L"BUTTON", L"撤销", WS_TABSTOP, ID_COMBO_UNDO, x + available - 114, y, 54, 28);
-    tip(undo, L"撤销上一次命名修改；不会回退目录。输入框内 Ctrl+Z 仍撤销文字。");
-    auto redo = child(L"BUTTON", L"重做", WS_TABSTOP, ID_COMBO_REDO, x + available - 54, y, 54, 28);
-    tip(redo, L"重做已撤销的命名修改；不会改变保存位置。");
-    y += 34;
-    child(L"BUTTON", L"", WS_TABSTOP, ID_AFFIX_SUMMARY, x, y, (available - 6) / 2, 24);
-    child(L"BUTTON", L"", WS_TABSTOP, ID_REPLACE_SUMMARY, x + (available + 6) / 2, y, (available - 6) / 2,
-          24);
-    child(L"BUTTON", L"修饰规则：关闭 ▾", WS_TABSTOP, ID_RULES_SUMMARY, x, y, available, 24);
-    y += 30;
+    auto rules = child(L"BUTTON", L"修饰 ▾", WS_TABSTOP, ID_RULES_SUMMARY, x + available - 136, y, 72, 28);
+    tip(rules, L"本次保存的前后缀与替换规则。");
+    auto undo = child(L"BUTTON", L"撤销", WS_TABSTOP, ID_COMBO_UNDO, x + available - 58, y, 26, 28);
+    tip(undo, L"撤销上一次命名修改（Ctrl + Z）；不会回退目录。输入框内 Ctrl+Z 仍撤销文字。");
+    auto redo = child(L"BUTTON", L"重做", WS_TABSTOP, ID_COMBO_REDO, x + available - 26, y, 26, 28);
+    tip(redo, L"重做已撤销的命名修改（Ctrl + Y）；不会改变保存位置。");
+    y += 32;
+    auto affix = child(L"BUTTON", L"", WS_TABSTOP, ID_AFFIX_SUMMARY, x, y, (available - 6) / 2, 0);
+    auto replace = child(L"BUTTON", L"", WS_TABSTOP, ID_REPLACE_SUMMARY, x + (available + 6) / 2, y,
+                         (available - 6) / 2, 0);
+    showIfChanged(affix, SW_HIDE);
+    showIfChanged(replace, SW_HIDE);
 }
 void updatePanelStatusLayout() {
     auto status = GetDlgItem(g->panel, ID_STATUS), capabilities = GetDlgItem(g->panel, ID_CAPABILITIES);
@@ -115,6 +117,53 @@ void updateExperienceContent() {
     bool expanded =
         !g->parts.prefix.empty() || !g->parts.suffix.empty() || g->ruleEnabled || g->inlineTool >= 2;
     showIfChanged(GetDlgItem(g->panel, ID_RULES_SUMMARY), expanded ? SW_HIDE : SW_SHOWNOACTIVATE);
+    auto affixButton = GetDlgItem(g->panel, ID_AFFIX_SUMMARY),
+         rule = GetDlgItem(g->panel, ID_REPLACE_SUMMARY);
+    if (auto number = GetDlgItem(g->panel, ID_NUMBER_MENU)) {
+        RECT nr{};
+        GetWindowRect(number, &nr);
+        MapWindowPoints(nullptr, g->panel, reinterpret_cast<POINT *>(&nr), 2);
+        int avail = px(g->width - PANEL_MARGIN * 2);
+        positionChild(number, nr.left, nr.top, avail - px(expanded ? 64 : 142), nr.bottom - nr.top);
+    }
+    if (affixButton && rule) {
+        RECT ar{}, rr{};
+        GetWindowRect(affixButton, &ar);
+        GetWindowRect(rule, &rr);
+        MapWindowPoints(nullptr, g->panel, reinterpret_cast<POINT *>(&ar), 2);
+        MapWindowPoints(nullptr, g->panel, reinterpret_cast<POINT *>(&rr), 2);
+        int curH = ar.bottom - ar.top, nextH = expanded ? px(24) : 0;
+        int delta = (expanded ? px(30) : 0) - (curH > 0 ? px(30) : 0);
+        if (delta) {
+            int cutoff = ar.top;
+            for (auto control : g->children) {
+                if (control == affixButton || control == rule)
+                    continue;
+                RECT below{};
+                GetWindowRect(control, &below);
+                MapWindowPoints(nullptr, g->panel, reinterpret_cast<POINT *>(&below), 2);
+                if (below.top >= cutoff)
+                    positionChild(control, below.left, below.top + delta, below.right - below.left,
+                                  below.bottom - below.top);
+            }
+            for (auto &field : g->fields)
+                if (field.top >= cutoff)
+                    OffsetRect(&field, 0, delta);
+            for (auto &label : g->labels)
+                if (label.rect.top >= cutoff)
+                    OffsetRect(&label.rect, 0, delta);
+            for (auto &line : g->dividers)
+                if (line >= cutoff)
+                    line += delta;
+            positionChild(affixButton, ar.left, ar.top, ar.right - ar.left, nextH);
+            positionChild(rule, rr.left, rr.top, rr.right - rr.left, nextH);
+            g->height += MulDiv(delta, 96, g->dpi);
+            SetWindowPos(g->panel, nullptr, 0, 0, px(g->width), px(g->height),
+                         SWP_NOMOVE | SWP_NOZORDER | SWP_NOACTIVATE);
+            reposition(false);
+            InvalidateRect(g->panel, nullptr, FALSE);
+        }
+    }
     for (int id : {ID_AFFIX_SUMMARY, ID_REPLACE_SUMMARY})
         showIfChanged(GetDlgItem(g->panel, id), expanded ? SW_SHOWNOACTIVATE : SW_HIDE);
     std::wstring affix;
@@ -122,11 +171,9 @@ void updateExperienceContent() {
         affix = L"前：" + g->parts.prefix;
     if (!g->parts.suffix.empty())
         affix += (affix.empty() ? L"" : L" · ") + std::wstring(L"后：") + g->parts.suffix;
-    auto affixButton = GetDlgItem(g->panel, ID_AFFIX_SUMMARY);
     setTextIfChanged(affixButton, affix.empty() ? L"前后缀：关闭" : affix);
     if (affixButton)
         tip(affixButton, (affix.empty() ? L"本次未添加前后缀" : affix) + L"\n点击编辑；收起后继续生效。");
-    auto rule = GetDlgItem(g->panel, ID_REPLACE_SUMMARY);
     auto ruleName = g->ruleIndex > 0 && static_cast<size_t>(g->ruleIndex) < renameRules().size()
                         ? renameRules()[g->ruleIndex].name
                         : L"自定义";

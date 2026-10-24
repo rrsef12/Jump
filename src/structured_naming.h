@@ -292,7 +292,7 @@ inline std::wstring namingSchemaError(const StructuredNaming &s) {
     };
     if (s.id.empty() || s.id.size() > 80 || trim(s.name).empty() || s.name.size() > 80 || s.fields.empty() ||
         s.fields.size() > 8 || !literal(s.separator, 3))
-        return L"请设置方案名称、1–8 个字段和有效分隔符";
+        return L"请设置方案名称、1–8 个命名部分和有效分隔符";
     if (s.counter < 0 || s.counter > 2 || s.digits < 2 || s.digits > 4 || s.dateFormat < 0 ||
         s.dateFormat > 2)
         return L"请检查方案的编号和日期格式";
@@ -306,7 +306,7 @@ inline std::wstring namingSchemaError(const StructuredNaming &s) {
             f.width < 0 || f.width > 8 || !literal(f.joiner, 3) || !literal(f.prefix, 40) ||
             !literal(f.suffix, 40) || f.defaultValue.size() > 120 || f.conditionValue.size() > 120 ||
             f.candidates.size() > 50)
-            return L"请检查字段名称、连接符和输出设置";
+            return L"请检查命名部分名称、连接符和输出设置";
         auto check = f;
         check.required = false;
         if (!f.enabled) {
@@ -320,13 +320,13 @@ inline std::wstring namingSchemaError(const StructuredNaming &s) {
         for (const auto &p : f.candidates) {
             error = namingFieldError(check, p.value);
             if (p.value.empty() || !error.empty() || p.name.size() > 80)
-                return L"候选：" + (error.empty() ? L"显示名称过长或输出为空" : error);
+                return L"常用选项：" + (error.empty() ? L"显示名称过长或输出为空" : error);
             if (!outputs.insert(namingFieldOutput(f, p.value)).second)
-                return f.label + L"存在输出结果相同的候选";
+                return f.label + L"存在输出结果相同的常用选项";
         }
     }
     if (!s.primaryField.empty() && !ids.contains(s.primaryField))
-        return L"原名填入字段已不存在";
+        return L"原名填入部分已不存在";
     if (s.locations.size() > 20)
         return L"目录推荐最多 20 条规则";
     std::set<std::wstring> routes;
@@ -348,7 +348,7 @@ inline std::wstring namingSchemaError(const StructuredNaming &s) {
             auto found = std::find_if(s.fields.begin(), s.fields.end(),
                                       [&](const auto &f) { return f.id == s.fields[at].conditionField; });
             if (found == s.fields.end() || s.fields[at].conditionValue.empty())
-                return L"出现条件需要有效字段和匹配值";
+                return L"出现条件需要有效命名部分和匹配值";
             at = static_cast<size_t>(found - s.fields.begin());
         }
     }

@@ -102,7 +102,8 @@ LRESULT CALLBACK ManagerTabProc(HWND h, UINT msg, WPARAM wp, LPARAM lp, UINT_PTR
             value.mask = TCIF_TEXT;
             value.pszText = text;
             value.cchTextMax = 80;
-            bool advanced = i == MANAGER_TEMPLATES || i == MANAGER_BACKUP || i == MANAGER_CONNECTIONS;
+            bool advanced =
+                i == 2 || i == MANAGER_TEMPLATES || i == MANAGER_BACKUP || i == MANAGER_CONNECTIONS;
             TabCtrl_GetItem(h, i, &value);
             SetTextColor(dc, i == selected || !advanced ? g->fg : g->muted);
             item.left += px(12);
@@ -353,7 +354,7 @@ void managerSelect() {
             if (sample.error.empty() && scheme.counter)
                 sample.name = numberingExample(sample.name, {scheme.counter, false, L"", L"",
                                                              scheme.dateFormat, scheme.digits, scheme.upper});
-            detail = namingDefaultsSummary(scheme.id) + L"\r\n字段：" + fields + L"\r\n" +
+            detail = namingDefaultsSummary(scheme.id) + L"\r\n命名部分：" + fields + L"\r\n" +
                      (sample.error.empty() ? L"示例：" + sample.name : L"使用时填写 · " + sample.error);
         }
         if (hasScheme)
@@ -412,7 +413,7 @@ int buildTemplateManager(HWND parent) {
     auto caption = [&](int x, int top, int width, const std::wstring &text) {
         managerLabel(parent, text, x, top, width);
     };
-    caption(16, y, available, L"点选字段组合 · 再点移除，新字段加在末尾");
+    caption(16, y, available, L"点选命名部分组合 · 再点移除，新项加在末尾");
     y += 26;
     g->variableTokens = {L"项目", L"name", L"作者", L"folder", L"date"};
     auto selectedKeys = expressionKeys(g->variableTemplateDraft);
@@ -584,8 +585,8 @@ void buildManagerPage(bool preserveDraft) {
         if (g->managerTab == 0) {
             makeList(52, 380, false);
             managerChild(parent, L"STATIC",
-                         L"字段、常用选项、格式、目录推荐和软件关联，统一在方案设置中修改和保存。", SS_LEFT,
-                         0, x, 58, width, 40);
+                         L"命名部分、常用选项、格式、目录推荐和软件关联，统一在方案设置中修改和保存。",
+                         SS_LEFT, 0, x, 58, width, 40);
             button(L"方案设置", M_SAVE, x, 108, 156);
             button(L"复制方案", M_COPY_SCHEME, x + 168, 108, 168);
             button(L"新建方案", M_ADD, x, 156, 156);
@@ -1573,6 +1574,10 @@ bool handleAppShortcut(const MSG &message) {
     } else if (root == g->panel && (message.wParam == 'F' || message.wParam == 'L')) {
         owner = g->panel;
         id = message.wParam == 'F' ? ID_DIRECTORY_SEARCH : ID_DIRECTORY_EDIT;
+    } else if (root == g->panel && (message.wParam == 'Z' || message.wParam == 'Y') &&
+               windowClass(GetFocus()) != L"Edit") {
+        owner = g->panel;
+        id = message.wParam == 'Z' ? ID_COMBO_UNDO : ID_COMBO_REDO;
     }
     auto button = id ? GetDlgItem(owner, id) : nullptr;
     if (!button || !IsWindowVisible(button) || !IsWindowEnabled(button))

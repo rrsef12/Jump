@@ -214,7 +214,7 @@ def run(rapid_only=False,native_history_only=False):
                 rapid_click(852,True);rapid_click(864,True);rapid_click(852,False);rapid_click(864,False)
                 filled('Rock_v001')
                 checks.append('rapid mixed-field add/remove keeps the last selection and native name, without saving')
-                menu.select(panel,app.pid,('本次命名','显示全部字段'))
+                menu.select(panel,app.pid,('本次命名','显示全部命名部分'))
                 command(782);n.wait(lambda:u.GetDlgItem(panel,800) and n.panel_ready(panel))
                 rapid_click(800);rapid_click(800)
                 filled('Rock_v001')
@@ -262,7 +262,7 @@ def run(rapid_only=False,native_history_only=False):
         assert not any(u.GetDlgItem(panel,i) for i in [750,765,776,777,788,789,791])
         header=tuple(getattr(e.rect(u.GetDlgItem(panel,790)),edge) for edge in ['left','top','right','bottom'])
         e.capture(panel,out/'unified-quick.png')
-        root=menu.select(panel,app.pid,('本次命名','显示全部字段'),
+        root=menu.select(panel,app.pid,('本次命名','显示全部命名部分'),
             required=[791,757,3,4,789,755,142,116,779,793,794,795,700,701,107,753,110,702,189])
         assert root==['命名方案','本次命名','撤销与还原','更多工具'],root
         n.wait(lambda:all(u.GetDlgItem(panel,i) for i in [*range(780,786),700,701,101,892]) and n.panel_ready(panel),
@@ -271,7 +271,7 @@ def run(rapid_only=False,native_history_only=False):
         assert all(u.GetDlgItem(panel,i) for i in [700,701])
         assert header==tuple(getattr(e.rect(u.GetDlgItem(panel,790)),edge) for edge in ['left','top','right','bottom'])
         filled('原文件_v001')
-        menu.select(panel,app.pid,('本次命名','显示全部字段'),checked=[('本次命名','显示全部字段'),('本次命名','自动版本 vNNN')]);n.wait(no_inputs)
+        menu.select(panel,app.pid,('本次命名','显示全部命名部分'),checked=[('本次命名','显示全部命名部分'),('本次命名','自动版本 vNNN')]);n.wait(no_inputs)
         quick_handle=u.GetDlgItem(panel,831);menu.select(panel,app.pid,capture=out/'unified-settings.png',dark=True)
         assert u.GetDlgItem(panel,831)==quick_handle
         checks.append('Naming settings has exactly four categories; all naming commands remain available once, with field and numbering checkmarks; cancelling keeps controls')
@@ -319,16 +319,16 @@ def run(rapid_only=False,native_history_only=False):
         command(700);filled('守卫_模型_v001')
         checks.append('blank area, location tab and another field dismiss valid quick input without losing the click; pending live input still fills and undo works')
         command(831);set_text(811,'守卫');filled('守卫_模型_v001')
-        menu.select(panel,app.pid,('本次命名','显示全部字段'));n.wait(lambda:u.GetDlgItem(panel,781));command(781)
+        menu.select(panel,app.pid,('本次命名','显示全部命名部分'));n.wait(lambda:u.GetDlgItem(panel,781));command(781)
         assert n.text(u.GetDlgItem(panel,760))=='守卫'
-        editor=u.GetDlgItem(panel,760);menu.select(panel,app.pid,checked=[('本次命名','显示全部字段')])
+        editor=u.GetDlgItem(panel,760);menu.select(panel,app.pid,checked=[('本次命名','显示全部命名部分')])
         assert u.GetDlgItem(panel,760)==editor
         mouse_pick(782,False);n.wait(lambda:n.text(u.GetDlgItem(panel,760))=='模型')
         time.sleep(.1);assert u.GetDlgItem(panel,760), 'an old blur must not close the newly selected field'
         mouse_pick(781,False);n.wait(lambda:n.text(u.GetDlgItem(panel,760))=='守卫')
         outside_click();n.wait(lambda:not u.GetDlgItem(panel,760));filled('守卫_模型_v001')
         command(781);assert u.GetDlgItem(panel,760)
-        menu.select(panel,app.pid,('本次命名','显示全部字段'));n.wait(no_inputs);filled('守卫_模型_v001')
+        menu.select(panel,app.pid,('本次命名','显示全部命名部分'));n.wait(no_inputs);filled('守卫_模型_v001')
         checks.append('the unified field-view toggle retains valid input; menu cancellation keeps the active editor open')
         command(831);set_text(811,'bad/name')
         error_shown()

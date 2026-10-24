@@ -27,7 +27,7 @@
 | Host app bridges (named pipes) | `blender_bridge.h`, `save_bridge.h`, `integrations/` |
 | Save verification and notices | `save_verification.h`, `save_notice.h` |
 | Naming engine and background numbering | `naming_session.h`, `naming_worker.h`, `naming_tools.h`, `naming_choices.h`, `subject_group.h` |
-| Main panel UI | `structured_ui.h`, `structured_controls.h`, `experience_ui.h`, `save_assist_ui.h`, `flyout_ui.h`, `paste_target_ui.h`, `transient_edit.h`, `naming_feedback.h`, `popup_menu.h`, `panel_graphics.h`, `panel_appearance.h`, `panel_material.h` |
+| Main panel UI | `panel_controls.h`, `panel_session.h`, `panel_proc.h`, `structured_ui.h`, `structured_controls.h`, `experience_ui.h`, `save_assist_ui.h`, `flyout_ui.h`, `paste_target_ui.h`, `transient_edit.h`, `naming_feedback.h`, `popup_menu.h`, `panel_graphics.h`, `panel_appearance.h`, `panel_material.h` |
 | Settings center | `manager_ui.h`, `settings_center.h`, `settings_host.h`, `settings_pages.h`, `settings_draft.h`, `form_dialog.h`, `workflow_ui.h`, `naming_defaults_ui.h` |
 | Scheme editor | `naming_designer.h`, `naming_designer_layout.h`, `naming_designer_preview.h` |
 | Built-in self tests (`--self-test`, `--check-layout`) | `workflow_checks.h`, `ui_checks.h`, tests at the end of `model.cpp` |

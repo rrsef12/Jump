@@ -9,7 +9,10 @@
 - README 拆分为用户手册与 `docs/dev/DEVELOPMENT.md`。
 - `AGENTS.md` 增加模块地图、术语表与文档规范。
 - 清理 `main.cpp` 未使用的控件 ID 与 `JobType::FocusFormat`；修正 `showPanelMenu` 缺少控件时的弹出锚点回退；统一非测试敏感的“泡泡 / 候选”文案为“预设 / 常用选项”。
-- 将 `main.cpp` 中的窗口检测与后台线程、GDI+ 绘制、弹出搜索/预设浮层、设置中心及内建界面自测拆分为 `dialog_detect.h`、`panel_graphics.h`、`flyout_ui.h`、`manager_ui.h`、`ui_checks.h`（`main.cpp` 从 6,630 行降至约 3,530 行）；构建启用 `/MP`。
+- 将 `main.cpp` 中的窗口检测与后台线程、GDI+ 绘制、面板控件与位置列表、面板会话与热更新、面板消息过程、弹出搜索/预设浮层、设置中心及内建界面自测拆分为 `dialog_detect.h`、`panel_graphics.h`、`panel_controls.h`、`panel_session.h`、`panel_proc.h`、`flyout_ui.h`、`manager_ui.h`、`ui_checks.h`（`main.cpp` 从 6,630 行降至约 1,280 行）；清理 `app_state.h` 中未使用的状态字段并按职责分区；构建启用 `/MP`。
+- 全面统一用户可见文案（`字段 → 命名部分`、`候选 → 常用选项`、`泡泡 → 预设`）并同步更新集成测试断言。
+- 主面板操作区减密：未展开修饰规则时将“自动版本 / 编号”、“修饰 ▾”与紧凑图标化“撤销 / 重做”合并为单行，按需展开前后缀与替换规则行；支持面板非编辑框焦点下 `Ctrl+Z` / `Ctrl+Y` 撤销重做命名组合。
+- 设置中心与菜单收口：设置中心将“保存流程”标为 `高级`，移除“面板设置”菜单中与“命名设置 ▾”重复的 6 个入口。
 - 使用 `.clang-format` 统一 `src/` 代码格式。
 
 ## 历史记录（2026-10-17 至 2026-10-21）

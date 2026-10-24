@@ -508,22 +508,10 @@ LRESULT CALLBACK FlyoutProc(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) {
 HMENU buildPanelMenu(int id) {
     auto menu = CreatePopupMenu();
     if (id == ID_PANEL_OPTIONS) {
-        AppendMenuW(menu, MF_STRING, ID_NAME_MANAGER, L"管理命名方案…");
-        AppendMenuW(menu, MF_STRING, ID_STRUCT_EXAMPLE, L"从现有名称建立方案…");
-        AppendMenuW(
-            menu, MF_STRING, ID_PROJECTS,
-            (L"项目：" + (activeProject(g->cfg) ? activeProject(g->cfg)->name : L"未选择") + L"…").c_str());
         AppendMenuW(menu, MF_STRING, ID_RECORDS, L"已核验的保存记录…");
         AppendMenuW(menu, MF_STRING, ID_EXPLAIN, L"查看名称组成…");
-        AppendMenuW(menu, MF_STRING | (g->namingHistory.canUndo() ? 0 : MF_GRAYED), ID_COMBO_UNDO,
-                    L"撤销命名组合");
-        AppendMenuW(menu, MF_STRING | (g->namingHistory.canRedo() ? 0 : MF_GRAYED), ID_COMBO_REDO,
-                    L"重做命名组合");
-
         AppendMenuW(menu, MF_STRING, ID_VARIABLE_EDIT, L"配置变量表达式…");
         AppendMenuW(menu, MF_STRING, ID_MANAGER, L"管理收藏位置…");
-        AppendMenuW(menu, MF_STRING, ID_PLANS, L"保存流程…");
-
         AppendMenuW(menu, MF_SEPARATOR, 0, nullptr);
         AppendMenuW(menu, MF_STRING, ID_BIND_CONTROL, L"指定文件名输入框…");
         AppendMenuW(menu, MF_STRING, ID_TRANSFER, L"迁移、备份与恢复…");

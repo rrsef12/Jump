@@ -228,7 +228,7 @@ void addExampleRecipes() {
         workflowNotice(L"示例未保存，原方案已保留。请检查配置目录写入权限。");
         return;
     }
-    workflowNotice(L"示例方案已就绪。选择后，在“配置变量表达式”中填写缺失字段。");
+    workflowNotice(L"示例方案已就绪。选择后，在“配置变量表达式”中填写缺失变量。");
 }
 void showSavedRecords() {
     auto menu = CreatePopupMenu();
@@ -267,7 +267,7 @@ void showNameExplanation() {
     auto expanded = smartNamingPreview(ruled.name, g->dialog.directory, g->dialog.extension, lightweight);
     auto menu = CreatePopupMenu();
     auto line = [&](const std::wstring &text, int id) { AppendMenuW(menu, MF_STRING, id, text.c_str()); };
-    line(L"命名字段：" + g->parts.base, ID_STRUCT_FIELDS_VIEW);
+    line(L"命名部分：" + g->parts.base, ID_STRUCT_FIELDS_VIEW);
     line(L"前缀：" + g->parts.prefix + L"　后缀：" + g->parts.suffix, ID_NAMING_MENU);
     line(L"1. 原始组合：" + source, ID_FOCUS_NAME);
     line(g->ruleEnabled ? L"2. 替换规则：" + (ruled.error.empty() ? ruled.name : ruled.error)

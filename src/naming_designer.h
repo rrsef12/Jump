@@ -384,7 +384,7 @@ inline std::wstring designerFieldRules(const StructuredNaming &draft, size_t ind
     for (const auto &other : draft.fields)
         if (other.id == field.conditionField)
             text += L" · 仅当“" + other.label + L"”为“" + field.conditionValue + L"”时加入";
-    text += field.quick ? L" · 主面板显示" : L" · 全部字段中显示";
+    text += field.quick ? L" · 主面板显示" : L" · 全部命名部分中显示";
     return text;
 }
 inline std::wstring designerLocationStatus(bool enabled, size_t count) {
@@ -559,7 +559,7 @@ inline bool designerReadLocation(HWND window, NamingDesigner &data, StructuredNa
         return true;
     int field = designerChoice(window, 4701);
     if (field < 0 || static_cast<size_t>(field) >= next.fields.size() || value.empty() || path.empty()) {
-        data.error = L"请填完目录规则的字段、匹配文字和文件夹；不需要的规则可删除。";
+        data.error = L"请填完目录规则的命名部分、匹配文字和文件夹；不需要的规则可删除。";
         return false;
     }
     NamingLocationRule rule{next.fields[field].id, value, path};
@@ -700,7 +700,7 @@ inline bool readDesignerField(HWND window, NamingDesigner &data, StructuredNamin
             return false;
         }
         if (next.primaryField == f.id && f.defaultSource != 0) {
-            data.error = L"带入原名的字段应使用“可编辑文字”来源";
+            data.error = L"带入原名的命名部分应使用“可编辑文字”来源";
             return false;
         }
     } else if (data.page == 1 && data.selected != remove) {
@@ -801,7 +801,7 @@ inline void designerLoadField(HWND window, NamingDesigner &data) {
     CheckDlgButton(window, ND_REQUIRED, f.required ? BST_CHECKED : BST_UNCHECKED);
     CheckDlgButton(window, ND_QUICK, f.quick ? BST_CHECKED : BST_UNCHECKED);
     CheckDlgButton(window, ND_ENABLED, f.enabled ? BST_CHECKED : BST_UNCHECKED);
-    designerSet(window, ND_SCOPE, data.page >= 3 ? L"方案设置 · 整个文件名" : L"当前字段 · " + f.label);
+    designerSet(window, ND_SCOPE, data.page >= 3 ? L"方案设置 · 整个文件名" : L"当前命名部分 · " + f.label);
     SendDlgItemMessageW(window, ND_CASING, CB_SETCURSEL, f.casing, 0);
     SendDlgItemMessageW(window, ND_VALIDATION, CB_SETCURSEL, f.validation, 0);
     designerSet(window, ND_WIDTH, std::to_wstring(f.width));
@@ -1472,8 +1472,9 @@ inline void designerCreateControls(HWND window, NamingDesigner &state) {
              {ND_ENABLED,
               L"控制整项是否参与命名。关闭会隐藏这项及依赖它的条件项，保留所有设置；重新勾选即可恢复。"},
              {ND_REQUIRED, L"勾选后，这项为空时会提示填写；取消勾选可留空，空白内容不会加入文件名。"},
-             {ND_QUICK, L"只控制主面板是否直接显示输入项。取消后仍参与命名，可从“显示全部字段”访问；要完全关"
-                        L"闭请取消“启用此项”。"},
+             {ND_QUICK,
+              L"只控制主面板是否直接显示输入项。取消后仍参与命名，可从“显示全部命名部分”访问；要完全关"
+              L"闭请取消“启用此项”。"},
              {ND_VALIDATION,
               L"选择“关闭限制（允许中文）”可取消方案额外的字符限制。Windows "
               L"文件名不能包含的字符仍不可使用。数字补零也要求仅输入数字，允许文字时请同时将补零设为 0。"},

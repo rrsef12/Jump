@@ -58,7 +58,7 @@ def run():
         button = u.GetDlgItem(panel, ident)
         assert button and u.IsWindowVisible(button)
         u.PostMessageW(button, 0x7B, button, -1)
-        return modal('重命名候选')
+        return modal('重命名常用选项')
 
     def rename(ident, value):
         form = open_rename(ident)
@@ -74,7 +74,7 @@ def run():
         notice = modal('Jump')
         button = next(h for h in n.children(notice) if n.text(h) == '确定')
         u.PostMessageW(notice, 0x111, u.GetDlgCtrlID(button), button)
-        form = modal('重命名候选')
+        form = modal('重命名常用选项')
         u.PostMessageW(form, 0x111, 2, 0)
         n.wait(lambda: not u.IsWindow(form))
 

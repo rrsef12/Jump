@@ -792,7 +792,7 @@ def run(catalog_only=False,rules_only=False,labels_only=False,help_only=False,as
         candidate=u.GetDlgItem(panel,842)
         assert n.text(candidate)=='T'
         u.PostMessageW(candidate,0x7B,candidate,-1)
-        form=modal('重命名候选');text(form,100,'TX');save(form);filled('TX_Rock_A_BC')
+        form=modal('重命名常用选项');text(form,100,'TX');save(form);filled('TX_Rock_A_BC')
         assert original_definition()==original, 'editing a copy must preserve its source definition'
         stop();start();filled('SK_Rock_A')
         command(830);text(panel,810,'TX');filled('TX_Rock_A_BC');command(888)
@@ -805,7 +805,7 @@ def run(catalog_only=False,rules_only=False,labels_only=False,help_only=False,as
         form=designer();save(form);filled('SK_Rock_A')
         assert 'HistoryOnly' not in recipe_structure(1)
         candidate=u.GetDlgItem(panel,841);u.PostMessageW(candidate,0x7B,candidate,-1)
-        form=modal('重命名候选');text(form,100,'SK_Copy');save(form);filled('SK_Copy_Rock_A')
+        form=modal('重命名常用选项');text(form,100,'SK_Copy');save(form);filled('SK_Copy_Rock_A')
         assert 'HistoryOnly' not in recipe_structure(1)
         checks.append('opening the designer and renaming an existing candidate do not copy temporary saved-file history into the definition')
 

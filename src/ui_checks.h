@@ -151,6 +151,32 @@ bool selfTestStructuredLayout(const std::filesystem::path &directory) {
                     if (r.left < 0 || r.top < 0 || r.right > client.right || r.bottom > client.bottom)
                         return hiddenCheckFailure("selfTestStructuredLayout", __LINE__);
                 }
+                RECT nr{}, rsr{}, ur{}, rdr{};
+                GetWindowRect(GetDlgItem(g->panel, ID_NUMBER_MENU), &nr);
+                GetWindowRect(GetDlgItem(g->panel, ID_RULES_SUMMARY), &rsr);
+                GetWindowRect(GetDlgItem(g->panel, ID_COMBO_UNDO), &ur);
+                GetWindowRect(GetDlgItem(g->panel, ID_COMBO_REDO), &rdr);
+                if (nr.top != rsr.top || nr.top != ur.top || nr.top != rdr.top || nr.right >= rsr.left ||
+                    rsr.right >= ur.left || ur.right >= rdr.left)
+                    return hiddenCheckFailure("compactActionsRowAlignment", __LINE__);
+                int collapsedHeight = g->height;
+                g->parts.prefix = L"PRE_";
+                updateExperienceContent();
+                updatePanelStatusLayout();
+                RECT ar{}, flr{};
+                GetWindowRect(GetDlgItem(g->panel, ID_AFFIX_SUMMARY), &ar);
+                GetWindowRect(GetDlgItem(g->panel, ID_FINAL_NAME_LABEL), &flr);
+                if ((GetWindowLongPtrW(GetDlgItem(g->panel, ID_RULES_SUMMARY), GWL_STYLE) & WS_VISIBLE) ||
+                    !(GetWindowLongPtrW(GetDlgItem(g->panel, ID_AFFIX_SUMMARY), GWL_STYLE) & WS_VISIBLE) ||
+                    ar.bottom - ar.top != px(24) || ar.bottom >= flr.top || g->height != collapsedHeight + 30)
+                    return hiddenCheckFailure("modifierRowExpand", __LINE__);
+                g->parts.prefix.clear();
+                updateExperienceContent();
+                updatePanelStatusLayout();
+                if (g->height != collapsedHeight ||
+                    !(GetWindowLongPtrW(GetDlgItem(g->panel, ID_RULES_SUMMARY), GWL_STYLE) & WS_VISIBLE) ||
+                    (GetWindowLongPtrW(GetDlgItem(g->panel, ID_AFFIX_SUMMARY), GWL_STYLE) & WS_VISIBLE))
+                    return hiddenCheckFailure("modifierRowCollapse", __LINE__);
                 auto name = L"structured-" + std::to_wstring(dpi) + (bottom ? L"-bottom" : L"-side") +
                             (editing     ? L"-edit.bmp"
                              : mode == 1 ? L"-input.bmp"

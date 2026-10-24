@@ -289,14 +289,14 @@ void buildStructuredControls(int &y, int available) {
     g->structuredVisibility = namingVisibility();
     auto title = child(L"BUTTON",
                        (g->structure.free       ? L"整名编辑 · "
-                        : g->structuredAdvanced ? L"全部字段 · "
+                        : g->structuredAdvanced ? L"全部部分 · "
                                                 : L"方案 · ") +
                            g->structure.name,
                        WS_TABSTOP, ID_STRUCT_NAME, x, y, available - 100, 28);
-    tip(title, g->structure.name + L"\n点击直接切换命名方案；字段和规则可从右侧“命名设置”编辑。");
+    tip(title, g->structure.name + L"\n点击直接切换命名方案；命名部分和规则可从右侧“命名设置”编辑。");
     auto settings =
         child(L"BUTTON", L"命名设置 ▾", WS_TABSTOP, ID_STRUCT_SCHEMES, x + available - 96, y, 96, 28);
-    tip(settings, L"统一管理方案、字段、前后缀、替换和末尾编号；也可撤销或还原本次命名。");
+    tip(settings, L"统一管理方案、命名部分、前后缀、替换和末尾编号；也可撤销或还原本次命名。");
     y += 34;
     if (g->structure.free) {
         child(L"STATIC", L"完整名称 · 输入即生效", SS_LEFT, ID_STRUCT_TITLE, x, y, available, 22);
