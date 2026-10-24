@@ -23,14 +23,14 @@
 | --- | --- |
 | Config model, parsing, persistence | `model.h/.cpp`, `config_writer.h`, `structured_naming.h` |
 | Shared state / thread transport types | `app_state.h` (UI-thread `State`), `save_session_types.h`, `ui_types.h` |
-| Save-dialog detection and UIA adapters (worker thread) | `filename_controls.h`, `generic_dialog.h`, `save_target.h`, `paste_target.h` |
+| Save-dialog detection and UIA adapters (worker thread) | `dialog_detect.h`, `filename_controls.h`, `generic_dialog.h`, `save_target.h`, `paste_target.h` |
 | Host app bridges (named pipes) | `blender_bridge.h`, `save_bridge.h`, `integrations/` |
 | Save verification and notices | `save_verification.h`, `save_notice.h` |
 | Naming engine and background numbering | `naming_session.h`, `naming_worker.h`, `naming_tools.h`, `naming_choices.h`, `subject_group.h` |
-| Main panel UI | `structured_ui.h`, `structured_controls.h`, `experience_ui.h`, `save_assist_ui.h`, `paste_target_ui.h`, `transient_edit.h`, `naming_feedback.h`, `popup_menu.h`, `panel_appearance.h`, `panel_material.h` |
-| Settings center | `settings_center.h`, `settings_host.h`, `settings_pages.h`, `settings_draft.h`, `form_dialog.h`, `workflow_ui.h`, `naming_defaults_ui.h` |
+| Main panel UI | `structured_ui.h`, `structured_controls.h`, `experience_ui.h`, `save_assist_ui.h`, `flyout_ui.h`, `paste_target_ui.h`, `transient_edit.h`, `naming_feedback.h`, `popup_menu.h`, `panel_graphics.h`, `panel_appearance.h`, `panel_material.h` |
+| Settings center | `manager_ui.h`, `settings_center.h`, `settings_host.h`, `settings_pages.h`, `settings_draft.h`, `form_dialog.h`, `workflow_ui.h`, `naming_defaults_ui.h` |
 | Scheme editor | `naming_designer.h`, `naming_designer_layout.h`, `naming_designer_preview.h` |
-| Built-in self tests (`--self-test`) | `workflow_checks.h`, tests at the end of `model.cpp` |
+| Built-in self tests (`--self-test`, `--check-layout`) | `workflow_checks.h`, `ui_checks.h`, tests at the end of `model.cpp` |
 
 When adding a new `WM_APP` message, timer, or control ID, check the existing constants at the top of `main.cpp` for collisions.
 

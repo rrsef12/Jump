@@ -30,7 +30,7 @@ struct DialogData {
     FilenameBinding controlScope;
 };
 
-enum class JobType { Inspect, Refresh, Apply, VerifySave, FocusFormat, BindControl, ResolvePaste };
+enum class JobType { Inspect, Refresh, Apply, VerifySave, BindControl, ResolvePaste };
 
 struct Job {
     JobType type = JobType::Inspect;

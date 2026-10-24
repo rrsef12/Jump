@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "form_dialog.h"
 #include "structured_naming.h"
 #include <uxtheme.h>

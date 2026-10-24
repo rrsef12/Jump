@@ -78,7 +78,7 @@ void buildQuickNaming(int &y,int available){
             const int labelWidth=f.label.size()>3?62:30,contentX=x+labelWidth+6,contentWidth=available-labelWidth-38;
             label(x,y+3,labelWidth,f.label);
             if(!fixed){auto more=child(L"BUTTON",primarySubject(static_cast<int>(i))?L"最近"+f.label:L"⋯",WS_TABSTOP,ID_QUICK_CHOICE+static_cast<int>(i),x+available-28,y,28,g->structuredField==static_cast<int>(i)?32:28);
-                tip(more,primarySubject(static_cast<int>(i))?L"最近使用的"+f.label+L"：点击选择；输入时按 ↓ 也可打开。":f.label+L"的全部选项、自定义输入和候选管理");}
+                tip(more,primarySubject(static_cast<int>(i))?L"最近使用的"+f.label+L"：点击选择；输入时按 ↓ 也可打开。":f.label+L"的全部选项、自定义输入和常用选项管理");}
             auto value=g->structuredField==static_cast<int>(i)?g->structuredDraft:fieldValue(f,g->cfg,g->structure.dateFormat);
             if(g->structuredField==static_cast<int>(i)){
                 auto edit=child(L"EDIT",value,ES_AUTOHSCROLL|WS_TABSTOP,ID_QUICK_INPUT+static_cast<int>(i),contentX,y,contentWidth-(combined?24:48),32);
@@ -88,7 +88,7 @@ void buildQuickNaming(int &y,int available){
                 child(L"BUTTON",L"收起",WS_TABSTOP,ID_QUICK_DONE,contentX+contentWidth-(combined?24:44),y,combined?28:44,32);y+=36;
             }else if(subject){
                 auto name=child(fixed?L"STATIC":L"BUTTON",value.empty()?L"点击填写":value,fixed?SS_LEFT:WS_TABSTOP,ID_QUICK_EDIT+static_cast<int>(i),contentX,y,contentWidth+(combined?4:0),28);
-                tip(name,f.label+L"："+value+(fixed?L"\n固定文字，可在方案编辑中修改。":primarySubject(static_cast<int>(i))?L"\n点击填写；右侧下拉可复用最近名称。":L"\n点击填写；更多选项中可编辑候选。"));y+=34;
+                tip(name,f.label+L"："+value+(fixed?L"\n固定文字，可在方案编辑中修改。":primarySubject(static_cast<int>(i))?L"\n点击填写；右侧下拉可复用最近名称。":L"\n点击填写；更多选项中可编辑常用选项。"));y+=34;
             }
             auto choices=visibleQuickChoices(static_cast<int>(i));
             g->quickPicks[static_cast<int>(i)]=choices;
@@ -193,13 +193,13 @@ void buildStructuredControls(int &y,int available){
         child(L"BUTTON",L"收起",WS_TABSTOP,ID_STRUCT_CLOSE,x+available-52,y,52,24);y+=26;
         auto edit=child(L"EDIT",g->structuredDraft,ES_AUTOHSCROLL|WS_TABSTOP,ID_STRUCT_INPUT,x,y,available,32);
         SendMessageW(edit,EM_SETLIMITTEXT,120,0);SetWindowSubclass(edit,StructuredEditProc,1,0);
-        tip(edit,L"直接修改，停顿后自动填入原窗口；点击别处或 Enter 收起，Esc 撤回本次输入。输入也会筛选候选。");y+=38;
+        tip(edit,L"直接修改，停顿后自动填入原窗口；点击别处或 Enter 收起，Esc 撤回本次输入。输入也会筛选常用选项。");y+=38;
         buildNamingHint(ID_FIELD_ERROR+g->structuredField,x,y,available);
         for(int i=0;i<6;++i){auto button=child(L"BUTTON",L"",WS_TABSTOP,ID_STRUCT_CHOICE+i,x+(i%3)*(cell+6),y+(i/3)*32,cell,28);SetWindowSubclass(button,StructuredChoiceProc,2,0);}
         child(L"STATIC",L"",SS_LEFT,ID_STRUCT_EMPTY,x,y+4,available,56);
         y+=64;
         child(L"BUTTON",L"清除此项",WS_TABSTOP,ID_STRUCT_CLEAR,x,y,80,24);
-        child(L"BUTTON",L"编辑候选…",WS_TABSTOP,ID_STRUCT_LIBRARY,x+86,y,88,24);
+        child(L"BUTTON",L"常用选项…",WS_TABSTOP,ID_STRUCT_LIBRARY,x+86,y,88,24);
         child(L"STATIC",f.source==1?L"继承项目":f.source==2?L"动态日期":L"本次值",SS_RIGHT,ID_STRUCT_SOURCE,x+available-112,y+3,112,20);y+=32;
         child(L"BUTTON",L"使用项目名称",WS_TABSTOP,ID_STRUCT_INHERIT,x,y,(available-6)/2,24);
         child(L"BUTTON",L"使用当天日期",WS_TABSTOP,ID_STRUCT_TODAY,x+(available+6)/2,y,(available-6)/2,24);y+=28;

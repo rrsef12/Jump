@@ -1,4 +1,4 @@
-﻿// Field-based naming shares the save/numbering pipeline.
+// Field-based naming shares the save/numbering pipeline.
 void rememberSubjectSelection(int index){
     if(!primarySubject(index)||g->structuredIme)return;
     const auto &field=g->structure.fields[index];
@@ -138,8 +138,8 @@ void updateStructuredChoices(){
         if(visible){const auto &p=g->structuredChoices[i];setTextIfChanged(button,p.name.empty()?p.value:p.name);tip(button,L"输出："+p.value+(namingFieldCanOmit(g->structure,g->structuredField)?L"\n点击填入，再次点击取消；不保存文件":L"\n点击替换，不保存文件")+L"\n右键改名");}
     }
     auto empty=GetDlgItem(g->panel,ID_STRUCT_EMPTY);
-    setTextIfChanged(empty,query.empty()&&primarySubject(g->structuredField)?L"填写具体对象名称；最近名称可从右侧下拉复用。\n常用选项可在“编辑候选”中添加。":
-        query.empty()?L"此字段暂无候选，可直接输入。":L"此字段没有匹配候选；输入仍作为本次值使用。");
+    setTextIfChanged(empty,query.empty()&&primarySubject(g->structuredField)?L"填写具体对象名称；最近名称可从右侧下拉复用。\n常用选项可在下方“常用选项…”中添加。":
+        query.empty()?L"此项暂无常用选项，可直接输入。":L"此项没有匹配的常用选项；输入仍作为本次值使用。");
     showIfChanged(empty,g->structuredChoices.empty()?SW_SHOWNOACTIVATE:SW_HIDE);
 }
 void updateStructuredContent(){
@@ -321,7 +321,7 @@ std::wstring schemeSubject(){
 bool storeNamingScheme(const StructuredNaming &scheme,bool activate,const std::vector<std::wstring> *applications,const bool *globalDefault){
     auto error=namingSchemaError(scheme);if(!error.empty()){workflowNotice(error);return false;}
     auto definition=namingDefinition(scheme);auto text=serializeStructure(definition);
-    if(text.size()>110000){workflowNotice(L"方案内容过多，请减少候选。");return false;}
+    if(text.size()>110000){workflowNotice(L"方案内容过多，请精简常用选项。");return false;}
     auto found=g->cfg.recipes.end();
     for(auto it=g->cfg.recipes.begin();it!=g->cfg.recipes.end();++it){
         auto current=deserializeStructure(it->structure);
@@ -546,7 +546,7 @@ bool renameStructuredCandidate(HWND control){
         auto previous=g->cfg.candidateRenames;
         auto found=std::find_if(g->cfg.candidateRenames.begin(),g->cfg.candidateRenames.end(),[&](const auto &r){return r.schema==schema&&r.field==fieldId&&r.from==candidate.value;});
         if(found==g->cfg.candidateRenames.end()){
-            if(g->cfg.candidateRenames.size()>=512){workflowNotice(L"候选改名记录已满，请通过编辑候选整理选项。");return true;}
+            if(g->cfg.candidateRenames.size()>=512){workflowNotice(L"改名记录已满，请通过方案设置整理常用选项。");return true;}
             g->cfg.candidateRenames.push_back({schema,fieldId,candidate.value,value});
         }else found->to=value;
         // Resolve repeated renames for built-in, saved and legacy candidates alike.
