@@ -601,6 +601,7 @@ LRESULT CALLBACK ControlProc(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) {
             return 0;
         }
         g->stemName = result->preview.name;
+        syncSaveProbe(&result->request.directory, &g->stemName);
         g->dirtyName = g->localNamePending = true;
         g->statusError = false;
         g->status = L"编号已更新；通过 Jump 保存时将再次核验";
@@ -689,7 +690,7 @@ LRESULT CALLBACK ControlProc(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) {
         if (event == EVENT_SYSTEM_FOREGROUND || event == EVENT_OBJECT_SHOW)
             g->inspectAttempts = 0;
         if (event == EVENT_SYSTEM_FOREGROUND) {
-            if (g->attached && !attachedDialogAlive())
+            if (g->attached && (!attachedDialogAlive() || !IsWindowVisible(g->dialog.hwnd)))
                 detach();
             SetTimer(hwnd, T_INSPECT, 85, nullptr);
         } else if (g->attached && target == g->dialog.hwnd &&
@@ -702,8 +703,10 @@ LRESULT CALLBACK ControlProc(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) {
         else if (g->attached && event == EVENT_OBJECT_LOCATIONCHANGE && target == g->dialog.hwnd)
             reposition();
         else if (g->attached && !g->busy && GetAncestor(target, GA_ROOT) == g->dialog.hwnd &&
-                 (event == EVENT_OBJECT_VALUECHANGE || event == EVENT_OBJECT_NAMECHANGE))
+                 (event == EVENT_OBJECT_VALUECHANGE || event == EVENT_OBJECT_NAMECHANGE)) {
+            syncSaveProbeFromNativeControls();
             SetTimer(hwnd, T_REFRESH, 120, nullptr);
+        }
         else if (event == EVENT_OBJECT_NAMECHANGE && target == GetForegroundWindow() &&
                  looksLikeFileDialog(target)) {
             g->inspectAttempts = 0;
@@ -845,6 +848,11 @@ LRESULT CALLBACK ControlProc(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) {
             g->pendingQuick = false;
             g->status = result->error;
             if (g->attached) {
+                if (result->job.type == JobType::Apply && result->navigated && !result->data.directory.empty()) {
+                    g->dialog.directory = result->data.directory;
+                    syncSaveProbe(&g->dialog.directory);
+                    rememberCurrentDirectory();
+                }
                 for (auto h : g->children)
                     EnableWindow(h, TRUE);
                 updatePanelContent();
@@ -954,6 +962,7 @@ LRESULT CALLBACK ControlProc(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) {
                 g->dialog.directory = result->data.directory;
                 g->dialog.extension = result->data.extension;
                 g->dialog.format = result->data.format;
+                syncSaveProbe();
             }
             rememberCurrentDirectory();
             if ((g->numberMode || g->folderName || g->variablesEnabled) &&

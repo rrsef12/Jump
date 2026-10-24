@@ -40,6 +40,14 @@ inline bool savedFileChanged(const SaveProbe &probe) {
            std::any_of(probe.alternatives.begin(), probe.alternatives.end(),
                        [](const SaveStamp &stamp) { return savedStampChanged(stamp); });
 }
+inline void addSaveAlternative(SaveProbe &probe, const std::wstring &file) {
+    if (file.empty() || normalize(probe.file) == normalize(file))
+        return;
+    for (const auto &existing : probe.alternatives)
+        if (normalize(existing.file) == normalize(file))
+            return;
+    probe.alternatives.push_back(readSaveStamp(file));
+}
 inline SaveProbe preserveSaveBaseline(const SaveProbe &previous, SaveProbe current) {
     // A transient empty address/button label during closing is not a new target.
     if (current.file.empty())
@@ -66,6 +74,23 @@ inline SaveProbe preserveSaveBaseline(const SaveProbe &previous, SaveProbe curre
     }
     for (auto &alternative : current.alternatives)
         preserve(alternative);
+    auto keepInSameDirectory = [&](const SaveStamp &oldStamp) {
+        if (oldStamp.file.empty() || !oldStamp.baselineKnown)
+            return;
+        if (normalize(std::filesystem::path(oldStamp.file).parent_path().wstring()) !=
+            normalize(current.directory))
+            return;
+        if (normalize(current.file) == normalize(oldStamp.file))
+            return;
+        for (const auto &alt : current.alternatives)
+            if (normalize(alt.file) == normalize(oldStamp.file))
+                return;
+        if (current.alternatives.size() < 8)
+            current.alternatives.push_back(oldStamp);
+    };
+    keepInSameDirectory(previous);
+    for (const auto &oldAlt : previous.alternatives)
+        keepInSameDirectory(oldAlt);
     return current;
 }
 } // namespace jump

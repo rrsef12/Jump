@@ -518,6 +518,39 @@ void rememberCurrentDirectory() {
     rememberLocation(g->cfg, {name.empty() ? directory : name, directory, L"历史"});
     persistDeferred();
 }
+void syncSaveProbe(const std::wstring *targetDirectory = nullptr, const std::wstring *targetStem = nullptr) {
+    if (!g->attached || !g->dialog.save)
+        return;
+    DialogData snapshot = g->dialog;
+    if (targetDirectory && !targetDirectory->empty())
+        snapshot.directory = *targetDirectory;
+    auto stem = targetStem ? *targetStem : g->stemName;
+    if (!stem.empty())
+        snapshot.name = stem;
+    auto current = saveProbeFor(snapshot);
+    if (current.file.empty())
+        return;
+    current.namingStructure = savedStructure();
+    current.namingProject = g->cfg.activeProject;
+    current.namingKnown = true;
+    g->saveProbe = preserveSaveBaseline(g->saveProbe, std::move(current));
+}
+void syncSaveProbeFromNativeControls() {
+    if (!g->attached || !g->dialog.save || g->dialog.generic || !IsWindow(g->dialog.hwnd))
+        return;
+    DialogData live = g->dialog;
+    if (auto dir = directoryFromToolbar(g->dialog.hwnd); !dir.empty())
+        live.directory = dir;
+    if (nativeValueControl(g->dialog.nameControl, g->dialog.hwnd, L"Edit")) {
+        if (auto text = trim(windowText(g->dialog.nameControl));
+            !text.empty() && !text.ends_with(L"\\") && !text.ends_with(L"/"))
+            live.name = text;
+    }
+    auto current = saveProbeFor(live);
+    if (!current.file.empty())
+        g->saveProbe = preserveSaveBaseline(g->saveProbe, std::move(current));
+    syncSaveProbe(&live.directory);
+}
 void verifySavedFile(const SaveProbe &probe) {
     if (probe.file.empty())
         return;
@@ -564,6 +597,7 @@ void apply(const std::wstring &path, const std::wstring &name, bool submit, bool
         submit = false;
     if (!g->attached)
         return;
+    syncSaveProbe(&path, &name);
     if (g->busy) {
         // Explicit Save during a name fill is serialized behind that fill.
         // Further edits invalidate this intent; background fills never create it.
@@ -985,13 +1019,16 @@ void perform(ButtonAction action, bool quick) {
         g->building = false;
         updatePanelContent();
     }
-    if (g->ruleError.empty())
+    if (g->ruleError.empty()) {
+        syncSaveProbe(&path, &name);
         apply(path, name, quick && g->cfg.quickSave && g->dialog.save);
+    }
 }
 void updateInlineRule(bool immediate) {
     invalidateNaming();
     KillTimer(g->control, T_ACTION);
     g->stemName = composedName();
+    syncSaveProbe();
     g->dirtyName = true;
     g->localNamePending = true;
     g->status = g->ruleError.empty() ? L"命名预览已更新，规则收起后继续生效" : g->ruleError;
@@ -1148,7 +1185,7 @@ void inspectForeground(bool requested = false) {
         g->suppressed = nullptr;
         g->inspectAttempts = 0;
     }
-    if (g->attached && !attachedDialogAlive())
+    if (g->attached && (!attachedDialogAlive() || !IsWindowVisible(g->dialog.hwnd)))
         detach();
     if (g->attached && foreground == g->dialog.hwnd && pid == g->dialog.pid) {
         if (IsWindowEnabled(foreground) && g->suppressed != foreground) {

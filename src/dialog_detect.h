@@ -394,7 +394,11 @@ bool inspectDialog(IUIAutomation *uia, const Job &job, DialogData &d) {
     auto button = lower(windowText(GetDlgItem(job.hwnd, IDOK)));
     auto title = lower(windowText(job.hwnd));
     d.save = job.saveDialog || button.find(L"保存") != button.npos || button.find(L"save") != button.npos ||
-             title.find(L"另存为") != title.npos || title.find(L"save as") != title.npos;
+             button.find(L"导出") != button.npos || button.find(L"export") != button.npos ||
+             button.find(L"存储") != button.npos || title.find(L"另存为") != title.npos ||
+             title.find(L"save as") != title.npos || title.find(L"保存") != title.npos ||
+             title.find(L"save") != title.npos || title.find(L"导出") != title.npos ||
+             title.find(L"export") != title.npos || title.find(L"存储") != title.npos;
     d.process = processName(job.hwnd);
     d.source = sourceDirectory(job.hwnd, d.name);
     return true;
@@ -614,6 +618,8 @@ void publishSaveCheck(const Job &job, bool saved) {
                     result->verifiedFile = alternative.file;
                     break;
                 }
+        if (!result->verifiedFile.empty())
+            result->job.probe.directory = std::filesystem::path(result->verifiedFile).parent_path().wstring();
     }
     if (PostMessageW(g->control, WM_RESULT, 0, reinterpret_cast<LPARAM>(result.get())))
         result.release();
@@ -887,20 +893,39 @@ DWORD WINAPI workerMain(void *) {
                             }
                             if (!ready)
                                 result->error = L"目录导航未完成，未提交保存。";
-                            else
+                            else {
                                 result->navigated = true;
+                                result->data.directory = directoryFromToolbar(job.hwnd);
+                            }
                         }
                     }
                 }
                 if (result->error.empty() && sameTarget(job)) {
                     if (!validName(job.name) && result->data.save)
                         result->error = L"文件名无效，不能包含路径字符或保留名称。";
-                    else if (!setFilename(uia.Get(), job, job.name))
-                        result->error = L"文件名填入失败，未提交保存。";
                     else {
                         DialogData after;
-                        if (!inspectDialog(uia.Get(), job, after) ||
-                            stripExtension(after.name, after.extension) != job.name)
+                        bool filled = false, verified = false;
+                        int maxAttempts = result->navigated ? 4 : 1;
+                        Job fillJob = job;
+                        for (int attempt = 0; attempt < maxAttempts && sameTarget(job); ++attempt) {
+                            if (attempt > 0) {
+                                fillJob.nameControl = nullptr;
+                                fillJob.formatControl = nullptr;
+                                Sleep(40);
+                            }
+                            if (!setFilename(uia.Get(), fillJob, job.name))
+                                continue;
+                            filled = true;
+                            if (inspectDialog(uia.Get(), fillJob, after) &&
+                                stripExtension(after.name, after.extension) == job.name) {
+                                verified = true;
+                                break;
+                            }
+                        }
+                        if (!filled)
+                            result->error = L"文件名填入失败，未提交保存。";
+                        else if (!verified)
                             result->error = L"文件名核验失败，未提交保存。";
                         else if (!job.directory.empty() &&
                                  normalize(after.directory) != normalize(job.directory))

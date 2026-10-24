@@ -779,6 +779,7 @@ LRESULT CALLBACK PanelProc(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) {
             if (!g->structure.enabled)
                 g->namingHistory.clear();
             syncNameParts();
+            syncSaveProbe();
             g->dirtyName = true;
             g->localNamePending = true;
             if (g->busy)

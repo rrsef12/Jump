@@ -236,7 +236,12 @@ void showSavedRecords() {
         AppendMenuW(menu, MF_STRING | MF_GRAYED, 1, L"尚无已核验的文件记录");
     for (size_t i = 0; i < g->cfg.savedFiles.size(); ++i) {
         const auto &file = g->cfg.savedFiles[i];
-        auto label = file.verifiedAt + L" · " + std::filesystem::path(file.path).filename().wstring();
+        std::filesystem::path fullPath(file.path);
+        auto folder = fullPath.parent_path().filename().wstring();
+        if (folder.empty())
+            folder = fullPath.parent_path().wstring();
+        auto label = file.verifiedAt + L" · " +
+                     (folder.empty() ? L"" : folder + L" / ") + fullPath.filename().wstring();
         AppendMenuW(menu, MF_STRING, 100 + i, label.c_str());
     }
     int choice = workflowMenu(menu);

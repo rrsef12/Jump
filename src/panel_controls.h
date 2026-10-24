@@ -960,7 +960,7 @@ void updateLocationShortcuts() {
     setTextIfChanged(more, L"查看全部历史（" + std::to_wstring(locations.size()) + L"）…");
     showIfChanged(more, history && locations.size() > 2 ? SW_SHOWNOACTIVATE : SW_HIDE);
     const wchar_t *empty = g->locationTab == 1   ? L"暂无收藏 · 点击路径旁的 ☆ 添加"
-                           : g->locationTab == 4 ? L"暂无最近保存记录"
+                           : g->locationTab == 4 ? L"暂无最近保存记录 · 保存后自动记录（仅浏览见历史）"
                            : g->locationTab == 2 ? L"暂无浏览历史"
                                                  : L"暂无位置，可点击下方路径输入目录";
     setTextIfChanged(GetDlgItem(g->panel, ID_LOCATION_EMPTY), empty);
